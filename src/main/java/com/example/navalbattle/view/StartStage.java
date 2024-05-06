@@ -10,7 +10,7 @@ import java.io.IOException;
 public class StartStage extends Stage {
     private StartStage startStage;
     public StartStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/navalbattle/start-naval-battle.view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/navalbattle/start-naval-battle-view.fxml"));
         Parent parent =loader.load();
         setTitle("Naval Battle");
         Scene scene = new Scene(parent);

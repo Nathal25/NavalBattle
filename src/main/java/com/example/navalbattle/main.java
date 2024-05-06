@@ -6,6 +6,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * @author Nathalia Ortiz
+ */
 public class main extends Application {
 
     public static void main(String[] args) {
@@ -13,7 +16,7 @@ public class main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage stage) throws IOException {
         StartStage.getInstance();
     }
 }
