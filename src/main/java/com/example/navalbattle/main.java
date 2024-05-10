@@ -1,5 +1,12 @@
 package com.example.navalbattle;
-
+/*
+Paleta de COlores
+191d32
+fdfdff
+957fef
+9a031e
+ba2d0b
+ */
 import com.example.navalbattle.view.StartStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
