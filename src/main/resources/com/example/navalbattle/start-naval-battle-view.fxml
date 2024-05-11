@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.navalbattle.controller.StartController">
@@ -27,7 +28,7 @@
          </children></HBox>
       <Pane prefHeight="226.0" prefWidth="407.0" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
-            <GridPane fx:id="boardPlayer1" layoutX="46.0" layoutY="14.0" prefHeight="321.0" prefWidth="315.0" style="-fx-background-color: lightgrey;">
+            <GridPane fx:id="boardPlayer1" layoutX="46.0" layoutY="14.0" prefHeight="315.0" prefWidth="315.0" style="-fx-background-color: lightgrey;">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
@@ -62,6 +63,9 @@
                </cursor>
             </Button>
          </children></Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <children>
+            <Rectangle fx:id="shpSQ" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="32.0" layoutX="28.0" layoutY="74.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
+         </children></Pane>
    </children>
 </GridPane>
