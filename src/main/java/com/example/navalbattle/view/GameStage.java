@@ -20,6 +20,7 @@ public class GameStage extends Stage {
         setTitle("Naval Battle");
         Scene scene = new Scene(parent);
         setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/com/example/navalbattle/NavalBattleStyles.css").toExternalForm());
         setResizable(false);
         show();
     }
