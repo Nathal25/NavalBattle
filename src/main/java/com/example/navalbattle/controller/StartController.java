@@ -1,7 +1,7 @@
 package com.example.navalbattle.controller;
 
 import com.example.navalbattle.model.DraggableMaker;
-import com.example.navalbattle.model.ImagesCreator;
+import com.example.navalbattle.model.FiguresCreator;
 import com.example.navalbattle.view.GameStage;
 import com.example.navalbattle.view.StartStage;
 import javafx.event.ActionEvent;
@@ -39,27 +39,18 @@ public class StartController extends Stage {
 
     DraggableMaker draggableMaker = new DraggableMaker();
 
-    private ImagesCreator imagesCreator;
+    FiguresCreator figuresCreator;
 
     public void initialize(){
         for (int i = 0; i <=9; i++){
             for (int j = 0; j <= 9; j++){
-                imagesCreator = new ImagesCreator();
-                boardPlayer1.add(imagesCreator.getImageView(),i,j);
+                String id=Integer.toString(i).concat(Integer.toString(j));
+                figuresCreator=new FiguresCreator();
+                figuresCreator.setId(Integer.parseInt(id));
+                boardPlayer1.add(figuresCreator.getRectangle(),i,j);
             }
         }
-        draggableMaker.makeDraggable(shpSQ);
-
-        /*
-        shpSQ.setOnMouseReleased(event -> {
-            // Calcular la celda del GridPane
-            int colIndex = (int) (event.getSceneX() / (gridPane.getWidth() / GridPane.getColumnIndex(shpSQ)));
-            int rowIndex = (int) (event.getSceneY() / (gridPane.getHeight() / GridPane.getRowIndex(shpSQ)));
-
-            // Colocar el rectángulo en la celda del GridPane
-            GridPane.setConstraints(shpSQ, colIndex, rowIndex);
-        });
-         */
+        draggableMaker.makeDraggable(shpSQ);//shpSQ es la figura que tengo en el scene
     }
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
