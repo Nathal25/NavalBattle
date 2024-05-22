@@ -26,7 +26,7 @@
          <children>
             <Label fx:id="lblTitle" prefHeight="17.0" prefWidth="702.0" text="BATALLA NAVAL" />
          </children></HBox>
-      <Pane prefHeight="226.0" prefWidth="407.0" GridPane.rowIndex="1" GridPane.rowSpan="2">
+      <Pane fx:id="basicPane" prefHeight="226.0" prefWidth="407.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
             <GridPane fx:id="boardPlayer1" layoutX="46.0" layoutY="14.0" prefHeight="315.0" prefWidth="315.0" style="-fx-background-color: lightgrey;">
               <columnConstraints>
@@ -62,10 +62,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-         </children></Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
-         <children>
-            <Rectangle fx:id="shpSQ" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="32.0" layoutX="28.0" layoutY="74.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
+            <Rectangle fx:id="shpSQ" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="32.0" layoutX="472.0" layoutY="87.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
          </children></Pane>
    </children>
 </GridPane>
