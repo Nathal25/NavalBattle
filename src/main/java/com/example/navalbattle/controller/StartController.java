@@ -2,7 +2,7 @@ package com.example.navalbattle.controller;
 
 import com.example.navalbattle.model.DraggableMaker;
 import com.example.navalbattle.model.FiguresCreator;
-import com.example.navalbattle.model.NavesCreator;
+import com.example.navalbattle.model.PortaAvionesCreator;
 import com.example.navalbattle.view.GameStage;
 import com.example.navalbattle.view.StartStage;
 import javafx.event.ActionEvent;
@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -41,7 +40,7 @@ public class StartController extends Stage {
 
     @FXML
     private Rectangle shpSQ;
-    NavesCreator navesCreator = new NavesCreator();
+    PortaAvionesCreator navesCreator = new PortaAvionesCreator();
     DraggableMaker draggableMaker = new DraggableMaker();
 
     private FiguresCreator figuresCreator;

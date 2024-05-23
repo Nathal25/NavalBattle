@@ -3,14 +3,14 @@ package com.example.navalbattle.model;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-public class NavesCreator {
+public class PortaAvionesCreator {
     private Polygon portaAviones;
     private Polygon fragata1;
     private Polygon fragata2;
     private Polygon fragata3;
     private Polygon fragata4;
     private int id;
-    public NavesCreator() {
+    public PortaAvionesCreator() {
         portaAviones = new Polygon(
                 0,32,//A
                 16,0,//B
