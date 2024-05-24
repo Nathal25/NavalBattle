@@ -56,9 +56,7 @@ public class StartController extends Stage {
             }
         }
 
-
         basicPane.getChildren().addAll(navesCreator.getPortaAviones(),navesCreator.getFragata1());
-
         draggableMaker.makeDraggable(shpSQ);//shpSQ es la figura que tengo en el scene
         draggableMaker.makeDraggable(navesCreator.getPortaAviones());
         draggableMaker.makeDraggable(navesCreator.getFragata1());
