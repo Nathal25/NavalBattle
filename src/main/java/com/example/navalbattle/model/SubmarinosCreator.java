@@ -30,7 +30,7 @@ public class SubmarinosCreator {
         submarino.setStroke(Color.rgb(136, 35, 70));
 
         // Agrega un evento de click al submarino para detectar clics del usuario
-        submarino.setOnMouseClicked(this::handleSubmarineClick);
+        submarino.setOnMouseClicked(this::handleSubmarinoClick);
     }
 
     public Polygon getSubmarino() {
@@ -60,7 +60,7 @@ public class SubmarinosCreator {
     }
 
     // Método para manejar el evento de click en el submarino
-    private void handleSubmarineClick(javafx.scene.input.MouseEvent mouseEvent) {
+    private void handleSubmarinoClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
             // Rotar el submarino cuando se hace clic derecho
             rotateClockwise();

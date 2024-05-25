@@ -36,7 +36,7 @@ public class PortaAvionesCreator {
         portaAviones.setStrokeWidth(1);
 
         // Agrega un evento de click al PortaAvion para detectar clics del usuario
-        portaAviones.setOnMouseClicked(this::handleSubmarineClick);
+        portaAviones.setOnMouseClicked(this::handlePortaAvionesClick);
 
     }
 
@@ -58,7 +58,7 @@ public class PortaAvionesCreator {
     }
 
     // Método para manejar el evento de click en los portaaviones
-    private void handleSubmarineClick(javafx.scene.input.MouseEvent mouseEvent) {
+    private void handlePortaAvionesClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
             // Rotar el portaAvion cuando se hace clic derecho
             rotateClockwise();

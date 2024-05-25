@@ -1,7 +1,9 @@
 package com.example.navalbattle.model;
 
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
 
 public class DestructoresCreator {
     private Polygon destructor;
@@ -21,6 +23,9 @@ public class DestructoresCreator {
         destructor.setFill(Color.rgb(228,140,255));
         destructor.setStroke(Color.BLACK);
         destructor.setStrokeWidth(1);
+
+        // Agrega un evento de click al destructor para detectar clics del usuario
+        destructor.setOnMouseClicked(this::handleDestructoresClick);
     }
     public Polygon getDestructor(){return destructor;}
 
@@ -35,4 +40,18 @@ public class DestructoresCreator {
     destructor.setLayoutX(x);}
     public void setLayoutY(double y){this.layoutY = layoutY;
     destructor.setLayoutY(y);}
+
+    // Método para manejar el evento de click en el submarino
+    private void handleDestructoresClick(javafx.scene.input.MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
+            // Rotar los destructores cuando se hace clic derecho
+            rotateClockwise();
+            System.out.println("Destructor rotado ");
+        }
+    }
+    // Método para rotar los destructores
+    private void rotateClockwise() {
+        Rotate rotate = new Rotate(90, destructor.getBoundsInLocal().getWidth() / 2, destructor.getBoundsInLocal().getHeight() / 2);
+        destructor.getTransforms().add(rotate);
+    }
 }

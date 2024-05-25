@@ -22,7 +22,7 @@ public class FragatasCreator {
         fragata.setStrokeWidth(1);
 
         // Agrega un evento de click al fragata para detectar clics del usuario
-        fragata.setOnMouseClicked(this::handleSubmarineClick);
+        fragata.setOnMouseClicked(this::handleFragatasClick);
     }
     public Polygon getFragata() {
         return fragata;
@@ -42,11 +42,11 @@ public class FragatasCreator {
     }
 
     // Método para manejar el evento de click el la fragata
-    private void handleSubmarineClick(javafx.scene.input.MouseEvent mouseEvent) {
+    private void handleFragatasClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
             // Rotar el fragata cuando se hace clic derecho
             rotateClockwise();
-            System.out.println("PortaAvion rotado ");
+            System.out.println("Fragata rotado ");
         }
     }
     // Método para rotar el fragata
