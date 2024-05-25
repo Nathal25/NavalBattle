@@ -1,7 +1,9 @@
 package com.example.navalbattle.model;
 
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
 
 public class FragatasCreator {
     private Polygon fragata;
@@ -18,6 +20,9 @@ public class FragatasCreator {
         fragata.setFill(Color.rgb(0,128,128));
         fragata.setStroke(Color.rgb(0,79,79));
         fragata.setStrokeWidth(1);
+
+        // Agrega un evento de click al fragata para detectar clics del usuario
+        fragata.setOnMouseClicked(this::handleSubmarineClick);
     }
     public Polygon getFragata() {
         return fragata;
@@ -35,5 +40,20 @@ public class FragatasCreator {
         this.layoutY = layoutY;
         fragata.setLayoutY(layoutY);
     }
+
+    // Método para manejar el evento de click el la fragata
+    private void handleSubmarineClick(javafx.scene.input.MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
+            // Rotar el fragata cuando se hace clic derecho
+            rotateClockwise();
+            System.out.println("PortaAvion rotado ");
+        }
+    }
+    // Método para rotar el fragata
+    private void rotateClockwise() {
+        Rotate rotate = new Rotate(90, fragata.getBoundsInLocal().getWidth() / 2, fragata.getBoundsInLocal().getHeight() / 2);
+        fragata.getTransforms().add(rotate);
+    }
+
 
 }

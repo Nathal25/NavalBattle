@@ -1,7 +1,9 @@
 package com.example.navalbattle.model;
 
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
 
 public class PortaAvionesCreator {
     private Polygon portaAviones;
@@ -32,7 +34,12 @@ public class PortaAvionesCreator {
         portaAviones.setFill(Color.RED);
         portaAviones.setStroke(Color.BLACK);
         portaAviones.setStrokeWidth(1);
+
+        // Agrega un evento de click al PortaAvion para detectar clics del usuario
+        portaAviones.setOnMouseClicked(this::handleSubmarineClick);
+
     }
+
     public Polygon getPortaAviones() {
         return portaAviones;
     }
@@ -49,4 +56,19 @@ public class PortaAvionesCreator {
         this.layoutx = layoutx;
         portaAviones.setLayoutX(layoutx);
     }
+
+    // Método para manejar el evento de click en los portaaviones
+    private void handleSubmarineClick(javafx.scene.input.MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
+            // Rotar el portaAvion cuando se hace clic derecho
+            rotateClockwise();
+            System.out.println("PortaAvion rotado ");
+        }
+    }
+    // Método para rotar el portaAvion
+    private void rotateClockwise() {
+        Rotate rotate = new Rotate(90, portaAviones.getBoundsInLocal().getWidth() / 2, portaAviones.getBoundsInLocal().getHeight() / 2);
+        portaAviones.getTransforms().add(rotate);
+    }
+
 }
