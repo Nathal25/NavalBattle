@@ -1,4 +1,5 @@
 package com.example.navalbattle.model;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -7,27 +8,38 @@ public class FiguresCreator {
     /**
      *@author Nathalia Ortiz
      */
-    private Rectangle rectangle;
+    private Pane pane;
     private int id;
 
 
     public FiguresCreator(){
-        rectangle = new Rectangle(32,32, Color.rgb(150,255,243));
-        rectangle.setStyle(
-                "-fx-border-width: 1; " +
-                        "-fx-border-style: solid;" +
-                        "-fx-stroke: rgba(0,0,0,0.91); " +
-                        "-fx-stroke-type: inside"
-        );
+
         this.id = id;
+        pane = new Pane();
+        pane.setPrefWidth(32);
+        pane.setPrefHeight(32);
+        pane.setStyle("-fx-background-color: rgb(177,194,255);" +
+                "-fx-border-color: rgba(0,0,0,0.7);" +
+                "-fx-stroke-type: inside;");
+
     }
-    public Rectangle getRectangle() {
-        return rectangle;
+
+    public Pane getPane(){
+        return pane;
     }
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
+
+    public void setPane(Pane pane) {
+        this.pane = pane;
+    }
+    public void setLayoutX(double x){
+        pane.setLayoutX(x);
+    }
+    public void setLayoutY(double y){
+        pane.setLayoutY(y);
     }
 
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
+
+
 }

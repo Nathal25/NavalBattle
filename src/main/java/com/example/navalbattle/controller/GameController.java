@@ -26,6 +26,6 @@ public class GameController {
     public void initialize(){
         gridPlayer = new GridPane();
         startController = new StartController();
-        gridPlayer=startController.getBoardPlayer1();
+        //gridPlayer=startController.getBoardPlayer1();
     }
 }
