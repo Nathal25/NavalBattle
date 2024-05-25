@@ -55,5 +55,4 @@ public class FragatasCreator {
         fragata.getTransforms().add(rotate);
     }
 
-
 }

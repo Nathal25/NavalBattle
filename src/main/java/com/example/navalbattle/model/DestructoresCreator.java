@@ -55,3 +55,4 @@ public class DestructoresCreator {
         destructor.getTransforms().add(rotate);
     }
 }
+

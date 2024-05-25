@@ -67,6 +67,7 @@ public class SubmarinosCreator {
             System.out.println("Submarino rotado ");
         }
     }
+
     // Método para rotar el submarino
     private void rotateClockwise() {
         Rotate rotate = new Rotate(90, submarino.getBoundsInLocal().getWidth() / 2, submarino.getBoundsInLocal().getHeight() / 2);
