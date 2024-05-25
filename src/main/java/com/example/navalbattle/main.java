@@ -21,6 +21,8 @@ import java.io.IOException;
 public class main extends Application {
 
     public static void main(String[] args) {
+        FileCRUD fileCRUD = new FileCRUD("data.txt");
+        fileCRUD.createFile("");
         launch(args);
     }
 
