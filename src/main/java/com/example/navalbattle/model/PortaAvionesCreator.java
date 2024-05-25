@@ -35,23 +35,12 @@ public class PortaAvionesCreator {
         portaAviones.setStroke(Color.BLACK);
         portaAviones.setStrokeWidth(1);
         portaAviones.setLayoutX(400);
-        portaAviones.setLayoutY(87);
+        portaAviones.setLayoutY(80);
 
-        fragata1 = new Polygon(
-                0,32,//A
-                16,0,//B
-                32,32
-        );
-        fragata1.setFill(Color.rgb(0,128,128));
-        fragata1.setStroke(Color.rgb(0,79,79));
-        fragata1.setStrokeWidth(1);
-        fragata1.setLayoutX(600);
-        fragata1.setLayoutY(87);
+
     }
     public Polygon getPortaAviones() {
         return portaAviones;
     }
     public void setPortaAviones(Polygon portaAviones) {this.portaAviones = portaAviones;}
-    public Polygon getFragata1() {return fragata1;}
-    public void setFragata1(Polygon fragata1) {this.fragata1 = fragata1;}
 }
