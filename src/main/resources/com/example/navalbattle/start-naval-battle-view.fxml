@@ -62,7 +62,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Rectangle fx:id="shpSQ" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="32.0" layoutX="472.0" layoutY="87.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
+            <Rectangle fx:id="shpSQ" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="32.0" layoutX="444.0" layoutY="252.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
          </children></Pane>
    </children>
 </GridPane>

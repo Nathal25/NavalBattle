@@ -7,6 +7,7 @@ fdfdff
 9a031e
 ba2d0b
  */
+import com.example.navalbattle.model.FileCRUD;
 import com.example.navalbattle.view.StartStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -20,6 +21,8 @@ import java.io.IOException;
 public class main extends Application {
 
     public static void main(String[] args) {
+        FileCRUD fileCRUD = new FileCRUD("data.txt");
+        fileCRUD.createFile("");
         launch(args);
     }
 
