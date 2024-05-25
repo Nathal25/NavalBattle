@@ -4,10 +4,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class SubmarinosCreator {
-    private Polygon submarino1;
+    private Polygon submarino;
+    private double layoutX,layoutY;
 
     public SubmarinosCreator(){
-        submarino1 = new Polygon(0,32,//A
+        submarino = new Polygon(0,32,//A
                 16,0,//B
                 32,32,//C
                 16,32,//D
@@ -20,15 +21,27 @@ public class SubmarinosCreator {
                 16,32,//D
                 0,32
         );
-        submarino1.setFill(Color.rgb(178,52,95));
-        submarino1.setStrokeWidth(1);
-        submarino1.setStroke(Color.rgb(136,35,70));
-        submarino1.setLayoutX(450);
-        submarino1.setLayoutY(80);
-    }
-    public Polygon getSubmarino1(){return submarino1;}
+        submarino.setFill(Color.rgb(178,52,95));
+        submarino.setStrokeWidth(1);
+        submarino.setStroke(Color.rgb(136,35,70));
 
-    public void setSubmarino1(Polygon submarino1) {
-        this.submarino1 = submarino1;
+    }
+    public Polygon getSubmarino(){return submarino;}
+
+    public void setSubmarino(Polygon submarino) {
+        this.submarino = submarino;
+    }
+
+    public double getLayoutX() {
+        return layoutX;
+    }
+    public void setLayoutX(double layoutX) {
+        this.layoutX = layoutX;
+        submarino.setLayoutX(layoutX);
+    }
+    public double getLayoutY() {return layoutY;}
+    public void setLayoutY(double layoutY) {
+        this.layoutY = layoutY;
+        submarino.setLayoutY(layoutY);
     }
 }

@@ -5,10 +5,8 @@ import javafx.scene.shape.Polygon;
 
 public class PortaAvionesCreator {
     private Polygon portaAviones;
-    private Polygon fragata1;
-    private Polygon fragata2;
-    private Polygon fragata3;
-    private Polygon fragata4;
+    private double layouty;
+    private double layoutx;
     private int id;
     public PortaAvionesCreator() {
         portaAviones = new Polygon(
@@ -34,13 +32,21 @@ public class PortaAvionesCreator {
         portaAviones.setFill(Color.RED);
         portaAviones.setStroke(Color.BLACK);
         portaAviones.setStrokeWidth(1);
-        portaAviones.setLayoutX(400);
-        portaAviones.setLayoutY(80);
-
-
     }
     public Polygon getPortaAviones() {
         return portaAviones;
     }
     public void setPortaAviones(Polygon portaAviones) {this.portaAviones = portaAviones;}
+
+    public double getLayouty() {return layouty;}
+    public void setLayouty(double layouty) {
+        this.layouty = layouty;
+        portaAviones.setLayoutY(layouty);
+    }
+
+    public double getLayoutx() {return layoutx;}
+    public void setLayoutx(double layoutx) {
+        this.layoutx = layoutx;
+        portaAviones.setLayoutX(layoutx);
+    }
 }
