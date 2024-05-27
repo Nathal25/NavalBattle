@@ -5,10 +5,12 @@ import com.example.navalbattle.view.GameStage;
 import com.example.navalbattle.view.StartStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -86,48 +88,65 @@ public class StartController extends Stage {
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                Pane pane = new Pane();
-                pane.setId(String.valueOf(i).concat(String.valueOf(j)));
-                pane.setPrefWidth(32);
-                pane.setPrefHeight(32);
-                pane.setStyle("-fx-background-color: rgb(177,194,255);" +
+                // Crear un StackPane
+                StackPane stackPane = new StackPane();
+                stackPane.setPrefWidth(32);
+                stackPane.setPrefHeight(32);
+                stackPane.setStyle("-fx-background-color: rgb(177,194,255);" +
                         "-fx-border-color: rgba(0,0,0,0.7);" +
                         "-fx-stroke-type: inside;");
 
                 double xPosition = j * paneSize;
                 double yPosition = i * paneSize;
 
-                pane.setLayoutX(xPosition);
-                pane.setLayoutY(yPosition);
+                stackPane.setLayoutX(xPosition);
+                stackPane.setLayoutY(yPosition);
 
-                gameBoard.getChildren().add(pane);
-                if (i == 0 || j == 0) {
-                    Label label = new Label("A");
-                    label.setStyle("-fx-text-fill: yellow;" +
-                            "-fx-alignment: center;" +
-                            "-fx-font-weight: bold;");
-                    pane.setStyle("-fx-background-color: rgb(4,19,114);" +
+                gameBoard.getChildren().add(stackPane);
+
+                if (i == 0 && j == 0) {
+                    // Posición (0,0) nula
+                    stackPane.setStyle("-fx-background-color: rgb(4,19,114);");
+                } else if (i == 0) {
+                    // Primera fila (letras de la A a la J)
+                    Label label = new Label(String.valueOf((char) ('A' + j - 1)));
+                    label.setStyle("-fx-text-fill: #ff762c;" +
+                            "-fx-font-weight: bold;"+
+                            "-fx-font-size: 15;");
+                    stackPane.setStyle("-fx-background-color: rgb(4,19,114);" +
                             "-fx-border-color: rgb(5,19,75);" +
-                            "-fx-stroke-type: inside;" +
-                            "-fx-alignment: center");
-                    pane.getChildren().add(label);
+                            "-fx-stroke-type: inside;");
+                    stackPane.setAlignment(Pos.CENTER); // Centrar el contenido vertical y horizontalmente
+                    stackPane.getChildren().add(label);
+                } else if (j == 0) {
+                    // Primera columna (números del 1 al 10)
+                    Label label = new Label(String.valueOf(i));
+                    label.setStyle("-fx-text-fill: #ff762c;" +
+                            "-fx-font-weight: bold;"+
+                            "-fx-font-size: 15;");
+                    stackPane.setStyle("-fx-background-color: rgb(4,19,114);" +
+                            "-fx-border-color: rgb(5,19,75);" +
+                            "-fx-stroke-type: inside;");
+                    stackPane.setAlignment(Pos.CENTER); // Centrar el contenido vertical y horizontalmente
+                    stackPane.getChildren().add(label);
                 } else {
-                    pane.setOnMouseEntered(event -> {
-                        pane.setStyle("-fx-background-color: rgb(173,173,173,0.66);" +
+                    // Resto de la cuadrícula
+                    stackPane.setOnMouseEntered(event -> {
+                        stackPane.setStyle("-fx-background-color: rgb(173,173,173,0.66);" +
                                 "-fx-border-color: rgba(0,0,0,0.7);" +
                                 "-fx-stroke-type: inside;");
                     });
 
-                    pane.setOnMouseExited(event -> {
-                        pane.setStyle("-fx-background-color: rgb(177,194,255);" +
+                    stackPane.setOnMouseExited(event -> {
+                        stackPane.setStyle("-fx-background-color: rgb(177,194,255);" +
                                 "-fx-border-color: rgba(0,0,0,0.7);" +
                                 "-fx-stroke-type: inside;");
                     });
 
-                    pane.setOnMouseClicked(event -> {
-                        System.out.println("La posicion en x es: " + pane.getLayoutX() + "" +
-                                ", y es: " + pane.getLayoutY() +
-                                ". El id es " + pane.getId());
+                    stackPane.setOnMouseClicked(event -> {
+                        System.out.println("La posicion en x es: " + stackPane.getLayoutX() +
+                                ", y es: " + stackPane.getLayoutY() +
+                                ". El id es " + stackPane.getId());
                     });
                 }
             }
