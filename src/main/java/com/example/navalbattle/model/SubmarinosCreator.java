@@ -30,7 +30,7 @@ public class SubmarinosCreator {
         submarino.setStroke(Color.rgb(136, 35, 70));
 
         // Agrega un evento de click al submarino para detectar clics del usuario
-        submarino.setOnMouseClicked(this::handleSubmarinoClick);
+        submarino.setOnMouseClicked(this::handleRotarClick);
     }
 
     public Polygon getSubmarino() {
@@ -59,19 +59,31 @@ public class SubmarinosCreator {
         submarino.setLayoutY(layoutY);
     }
 
-    // Método para manejar el evento de click en el submarino
-    private void handleSubmarinoClick(javafx.scene.input.MouseEvent mouseEvent) {
+    // Método para manejar el evento de click en los submarinos
+    private void handleRotarClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
-            // Rotar el submarino cuando se hace clic derecho
-            rotateClockwise();
+            // Rotar el portaAvion cuando se hace clic derecho
+            double layoutY = submarino.getLayoutY();
+            double layoutX = submarino.getLayoutX();
+
+            if ((layoutY != 373 && layoutY != 309 && layoutY != 341) &&
+                    (layoutX != 357 && layoutX != 325 && layoutX != 293)) {
+                reDoCoords();
+            }
             System.out.println("Submarino rotado ");
         }
     }
-
-    // Método para rotar el submarino
-    private void rotateClockwise() {
-        Rotate rotate = new Rotate(90, submarino.getBoundsInLocal().getWidth() / 2, submarino.getBoundsInLocal().getHeight() / 2);
-        submarino.getTransforms().add(rotate);
+    public void reDoCoords() {
+        double[] coordenadas = submarino.getPoints().stream().mapToDouble(Double::doubleValue).toArray();
+        double[] nuevasCoordenadas = new double[coordenadas.length];
+        for (int i = 0; i < coordenadas.length; i += 2) {
+            nuevasCoordenadas[i] = coordenadas[i + 1]; // y -> x
+            nuevasCoordenadas[i + 1] = coordenadas[i]; // x -> y
+        }
+        submarino.getPoints().clear();
+        for (double coord : nuevasCoordenadas) {
+            submarino.getPoints().add(coord);
+        }
     }
 
 }

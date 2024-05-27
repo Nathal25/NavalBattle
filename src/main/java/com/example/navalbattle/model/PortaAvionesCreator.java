@@ -3,14 +3,16 @@ package com.example.navalbattle.model;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.transform.Rotate;
 
 public class PortaAvionesCreator {
     private Polygon portaAviones;
     private double layouty;
     private double layoutx;
     private int id;
+
     public PortaAvionesCreator() {
+
+
         portaAviones = new Polygon(
                 0,32,//A
                 16,0,//B
@@ -36,7 +38,7 @@ public class PortaAvionesCreator {
         portaAviones.setStrokeWidth(1);
 
         // Agrega un evento de click al PortaAvion para detectar clics del usuario
-        portaAviones.setOnMouseClicked(this::handlePortaAvionesClick);
+        portaAviones.setOnMouseClicked(this::handleRotarClick);
 
     }
 
@@ -46,6 +48,7 @@ public class PortaAvionesCreator {
     public void setPortaAviones(Polygon portaAviones) {this.portaAviones = portaAviones;}
 
     public double getLayouty() {return layouty;}
+
     public void setLayouty(double layouty) {
         this.layouty = layouty;
         portaAviones.setLayoutY(layouty);
@@ -58,17 +61,30 @@ public class PortaAvionesCreator {
     }
 
     // Método para manejar el evento de click en los portaaviones
-    private void handlePortaAvionesClick(javafx.scene.input.MouseEvent mouseEvent) {
+    private void handleRotarClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
             // Rotar el portaAvion cuando se hace clic derecho
-            rotateClockwise();
+            double layoutY = portaAviones.getLayoutY();
+            double layoutX = portaAviones.getLayoutX();
+
+            if ((layoutY != 373 && layoutY != 309 && layoutY != 341) &&
+                    (layoutX != 357 && layoutX != 325 && layoutX != 293)) {
+                reDoCoords();
+            }
             System.out.println("PortaAvion rotado ");
         }
     }
-    // Método para rotar el portaAvion
-    private void rotateClockwise() {
-        Rotate rotate = new Rotate(90, portaAviones.getBoundsInLocal().getWidth() / 2, portaAviones.getBoundsInLocal().getHeight() / 2);
-        portaAviones.getTransforms().add(rotate);
+    public void reDoCoords() {
+        double[] coordenadas = portaAviones.getPoints().stream().mapToDouble(Double::doubleValue).toArray();
+        double[] nuevasCoordenadas = new double[coordenadas.length];
+        for (int i = 0; i < coordenadas.length; i += 2) {
+            nuevasCoordenadas[i] = coordenadas[i + 1]; // y -> x
+            nuevasCoordenadas[i + 1] = coordenadas[i]; // x -> y
+        }
+        portaAviones.getPoints().clear();
+        for (double coord : nuevasCoordenadas) {
+            portaAviones.getPoints().add(coord);
+        }
     }
 
 }

@@ -25,7 +25,7 @@ public class DestructoresCreator {
         destructor.setStrokeWidth(1);
 
         // Agrega un evento de click al destructor para detectar clics del usuario
-        destructor.setOnMouseClicked(this::handleDestructoresClick);
+        destructor.setOnMouseClicked(this::handleRotarClick);
     }
     public Polygon getDestructor(){return destructor;}
 
@@ -36,23 +36,39 @@ public class DestructoresCreator {
     public double getLayoutX(){return layoutX;}
     public double getLayoutY(){return layoutY;}
 
-    public void setLayoutX(double x){this.layoutX = layoutX;
-    destructor.setLayoutX(x);}
-    public void setLayoutY(double y){this.layoutY = layoutY;
-    destructor.setLayoutY(y);}
+    public void setLayoutX(double x){
+        this.layoutX = layoutX;
+        destructor.setLayoutX(x);
+    }
+    public void setLayoutY(double y){
+        this.layoutY = layoutY;
+        destructor.setLayoutY(y);
+    }
 
-    // Método para manejar el evento de click en el submarino
-    private void handleDestructoresClick(javafx.scene.input.MouseEvent mouseEvent) {
+    // Método para manejar el evento de click en los submarinos
+    private void handleRotarClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
-            // Rotar los destructores cuando se hace clic derecho
-            rotateClockwise();
+            // Rotar el portaAvion cuando se hace clic derecho
+            double layoutY = destructor.getLayoutY();
+            double layoutX = destructor.getLayoutX();
+
+            if ((layoutY != 373 && layoutY != 309 && layoutY != 341) &&
+                    (layoutX != 357 && layoutX != 325 && layoutX != 293)) {
+                reDoCoords();
+            }
             System.out.println("Destructor rotado ");
         }
     }
-    // Método para rotar los destructores
-    private void rotateClockwise() {
-        Rotate rotate = new Rotate(90, destructor.getBoundsInLocal().getWidth() / 2, destructor.getBoundsInLocal().getHeight() / 2);
-        destructor.getTransforms().add(rotate);
+    public void reDoCoords() {
+        double[] coordenadas = destructor.getPoints().stream().mapToDouble(Double::doubleValue).toArray();
+        double[] nuevasCoordenadas = new double[coordenadas.length];
+        for (int i = 0; i < coordenadas.length; i += 2) {
+            nuevasCoordenadas[i] = coordenadas[i + 1]; // y -> x
+            nuevasCoordenadas[i + 1] = coordenadas[i]; // x -> y
+        }
+        destructor.getPoints().clear();
+        for (double coord : nuevasCoordenadas) {
+            destructor.getPoints().add(coord);
+        }
     }
 }
-
