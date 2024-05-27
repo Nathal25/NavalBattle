@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.navalbattle.controller.StartController">
@@ -37,9 +36,6 @@
                     </cursor>
                 </Button>
                 <Pane fx:id="gameBoard" layoutX="36.0" layoutY="53.0" maxHeight="352.0" maxWidth="352.0" minHeight="352.0" minWidth="352.0" prefHeight="352.0" prefWidth="352.0" />
-                <Line endX="251.0" layoutX="137.0" layoutY="85.0" startX="-100.0" stroke="#ffd20c" />
-                <Line endX="-100.0" endY="277.0" layoutX="137.0" layoutY="86.0" startX="-100.0" />
-                <Line endX="-100.0" endY="277.0" layoutX="168.0" layoutY="86.0" startX="-100.0" stroke="#ffee00" />
             </children></Pane>
     </children>
 </GridPane>
