@@ -63,29 +63,9 @@ public class PortaAvionesCreator {
     // Método para manejar el evento de click en los portaaviones
     private void handleRotarClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
-            // Rotar el portaAvion cuando se hace clic derecho
-            double layoutY = portaAviones.getLayoutY();
-            double layoutX = portaAviones.getLayoutX();
-
-            if ((layoutY != 373 && layoutY != 309 && layoutY != 341) &&
-                    (layoutX != 357 && layoutX != 325 && layoutX != 293)) {
-                reDoCoords();
-            }
-            System.out.println("PortaAvion rotado ");
+            // Rotar el submarino cuando se hace clic derecho
+            portaAviones.getTransforms().add(new javafx.scene.transform.Rotate(90, 16, 48));
+            System.out.println("PortaAviones rotado");
         }
     }
-    public void reDoCoords() {
-        double[] coordenadas = portaAviones.getPoints().stream().mapToDouble(Double::doubleValue).toArray();
-        double[] nuevasCoordenadas = new double[coordenadas.length];
-        for (int i = 0; i < coordenadas.length; i += 2) {
-            nuevasCoordenadas[i] = coordenadas[i + 1]; // y -> x
-            nuevasCoordenadas[i + 1] = coordenadas[i]; // x -> y
-        }
-        portaAviones.getPoints().clear();
-        for (double coord : nuevasCoordenadas) {
-            portaAviones.getPoints().add(coord);
-        }
-    }
-
 }
-

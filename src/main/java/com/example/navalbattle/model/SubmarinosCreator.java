@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
 
+import java.awt.event.MouseEvent;
+
 public class SubmarinosCreator {
     private Polygon submarino;
     private double layoutX, layoutY;
@@ -32,6 +34,7 @@ public class SubmarinosCreator {
         // Agrega un evento de click al submarino para detectar clics del usuario
         submarino.setOnMouseClicked(this::handleRotarClick);
     }
+
 
     public Polygon getSubmarino() {
         return submarino;
@@ -62,28 +65,12 @@ public class SubmarinosCreator {
     // Método para manejar el evento de click en los submarinos
     private void handleRotarClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
-            // Rotar el portaAvion cuando se hace clic derecho
-            double layoutY = submarino.getLayoutY();
-            double layoutX = submarino.getLayoutX();
+            // Rotar el submarino cuando se hace clic derecho
+            submarino.getTransforms().add(new javafx.scene.transform.Rotate(90, 16, 48));
+            System.out.println("Submarino rotado");
+        }
 
-            if ((layoutY != 373 && layoutY != 309 && layoutY != 341) &&
-                    (layoutX != 357 && layoutX != 325 && layoutX != 293)) {
-                reDoCoords();
-            }
-            System.out.println("Submarino rotado ");
-        }
-    }
-    public void reDoCoords() {
-        double[] coordenadas = submarino.getPoints().stream().mapToDouble(Double::doubleValue).toArray();
-        double[] nuevasCoordenadas = new double[coordenadas.length];
-        for (int i = 0; i < coordenadas.length; i += 2) {
-            nuevasCoordenadas[i] = coordenadas[i + 1]; // y -> x
-            nuevasCoordenadas[i + 1] = coordenadas[i]; // x -> y
-        }
-        submarino.getPoints().clear();
-        for (double coord : nuevasCoordenadas) {
-            submarino.getPoints().add(coord);
-        }
-    }
 
+    }
 }
+

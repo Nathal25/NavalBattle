@@ -30,4 +30,5 @@ public class main extends Application {
     public void start(Stage stage) throws IOException {
         StartStage.getInstance();
     }
+
 }
