@@ -11,8 +11,12 @@ import java.awt.event.MouseEvent;
 public class SubmarinosCreator {
     private Polygon submarino;
     private double layoutX, layoutY;
+    private int turns=1;
+    private int id;
 
     public SubmarinosCreator() {
+        this.id=64;
+
         submarino = new Polygon(
                 0, 32,   // A
                 16, 0,   // B
@@ -68,9 +72,24 @@ public class SubmarinosCreator {
             // Rotar el submarino cuando se hace clic derecho
             submarino.getTransforms().add(new javafx.scene.transform.Rotate(90, 16, 48));
             System.out.println("Submarino rotado");
+            turns++;
+            //System.out.println("La cantidad de giros es: "+turns);
+            if (turns == 4) {
+                resetTurns();
+            }
+
         }
+    }
 
+    private void resetTurns(){
+        turns=1;
+    }
 
+    public int getTurns() {
+        return turns;
+    }
+    public int getId() {
+        return id;
     }
 }
 

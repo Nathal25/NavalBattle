@@ -30,79 +30,64 @@ public class DraggableMaker {
     private final double POSITION_Y10 = 373;
     private double closestX;
     private double closestY;
+    private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
+    private int id;
+    private IPositionListener positionListener;
 
     public void makeDraggable(Node node) {
-        node.setOnMousePressed(mouseEvent -> {
-            // Guardar la posición del mouse cuando se presiona el botón
-            posMouseX = mouseEvent.getSceneX() - node.getLayoutX();
-            posMouseY = mouseEvent.getSceneY() - node.getLayoutY();
-        });
+        if (gameOn) {
+            node.setOnMousePressed(mouseEvent -> {
+                posMouseX = mouseEvent.getSceneX() - node.getLayoutX();
+                posMouseY = mouseEvent.getSceneY() - node.getLayoutY();
+            });
 
-        node.setOnMouseDragged(mouseEvent -> {
-            // Calcular nuevas posiciones
-            double newX = mouseEvent.getSceneX() - posMouseX;
-            double newY = mouseEvent.getSceneY() - posMouseY;
+            node.setOnMouseDragged(mouseEvent -> {
+                double newX = mouseEvent.getSceneX() - posMouseX;
+                double newY = mouseEvent.getSceneY() - posMouseY;
 
-            // Asegurarse de que el nodo no se salga del AnchorPane
-            if (newX >= 0 && newX <= parentWidth - node.getBoundsInParent().getWidth()) {
-                node.setLayoutX(newX);
-            }
-            if (newY >= 0 && newY <= parentHeight - node.getBoundsInParent().getHeight()) {
-                node.setLayoutY(newY);
-            }
-        });
+                if (newX >= 0 && newX <= parentWidth - node.getBoundsInParent().getWidth()) {
+                    node.setLayoutX(newX);
+                }
+                if (newY >= 0 && newY <= parentHeight - node.getBoundsInParent().getHeight()) {
+                    node.setLayoutY(newY);
+                }
+            });
 
-        node.setOnMouseReleased(mouseEvent -> {
-            // Restablecer el desplazamiento cuando se suelta el mouse
-            posMouseX = 0;
-            posMouseY = 0;
-            // Ajustar la posición a la más cercana
-            adjustToClosestPosition(node);
-        });
-    }
-
-    public double getPosMouseX() {
-        return posMouseX;
-    }
-
-    public double getPosMouseY() {
-        return posMouseY;
-    }
-
-    public void setPosMouseX(double posMouseX) {
-        this.posMouseX = posMouseX;
-    }
-
-    public void setPosMouseY(double posMouseY) {
-        this.posMouseY = posMouseY;
-    }
-
-    public double getClosestX() {
-        return closestX;
-    }
-
-    public double getClosestY() {
-        return closestY;
+            node.setOnMouseReleased(mouseEvent -> {
+                posMouseX = 0;
+                posMouseY = 0;
+                adjustToClosestPosition(node);
+                System.out.println("El elemento movido tiene Id " + id);
+            });
+        } else {
+            System.out.println("Game is not on.");
+        }
     }
 
     public void adjustToClosestPosition(Node node) {
         double currentY = node.getLayoutY();
-        double[] positionsY = {POSITION_Y1, POSITION_Y2, POSITION_Y3,POSITION_Y4,POSITION_Y5,POSITION_Y6,POSITION_Y7,POSITION_Y8,POSITION_Y9,POSITION_Y10}; // Agrega aquí todas las posiciones Y fijas
+        double[] positionsY = {
+                POSITION_Y1, POSITION_Y2, POSITION_Y3, POSITION_Y4, POSITION_Y5,
+                POSITION_Y6, POSITION_Y7, POSITION_Y8, POSITION_Y9, POSITION_Y10
+        };
 
-        double closestY = positionsY[0]; // Inicializa closestY con la primera posición
-        double minDifferenceY = Math.abs(currentY - positionsY[0]); // Calcula la diferencia absoluta con la primera posición
+        closestY = positionsY[0];
+        double minDifferenceY = Math.abs(currentY - positionsY[0]);
 
         for (int i = 1; i < positionsY.length; i++) {
-            double difference = Math.abs(currentY - positionsY[i]); // Calcula la diferencia absoluta con la posición actual del bucle
-            if (difference < minDifferenceY) { // Si la diferencia es menor que la mínima registrada hasta ahora
-                closestY = positionsY[i]; // Actualiza closestY con la posición actual
-                minDifferenceY = difference; // Actualiza la mínima diferencia registrada
+            double difference = Math.abs(currentY - positionsY[i]);
+            if (difference < minDifferenceY) {
+                closestY = positionsY[i];
+                minDifferenceY = difference;
             }
         }
 
         double currentX = node.getLayoutX();
-        double[] positionsX = {POSITION_X1, POSITION_X2, POSITION_X3, POSITION_X4, POSITION_X5, POSITION_X6, POSITION_X7, POSITION_X8, POSITION_X9, POSITION_X10};
-        double closestX = positionsX[0];
+        double[] positionsX = {
+                POSITION_X1, POSITION_X2, POSITION_X3, POSITION_X4, POSITION_X5,
+                POSITION_X6, POSITION_X7, POSITION_X8, POSITION_X9, POSITION_X10
+        };
+        closestX = positionsX[0];
         double minDifferenceX = Math.abs(currentX - positionsX[0]);
 
         for (int i = 1; i < positionsX.length; i++) {
@@ -114,5 +99,31 @@ public class DraggableMaker {
         }
         node.setLayoutY(closestY);
         node.setLayoutX(closestX);
+
+        if (positionListener != null) {
+            positionListener.onPositionChanged(closestX, closestY);
+        }
+        System.out.println("-- closestX: " + closestX);
+        System.out.println("-- closestY: " + closestY);
+    }
+
+    public void setPositionListener(IPositionListener positionListener) {
+        this.positionListener = positionListener;
+    }
+
+    public double getClosestX() {
+        return closestX;
+    }
+
+    public double getClosestY() {
+        return closestY;
+    }
+
+    public boolean isGameOn() {
+        return gameOn;
+    }
+
+    public void setGameOn(boolean gameOn) {
+        this.gameOn = gameOn;
     }
 }

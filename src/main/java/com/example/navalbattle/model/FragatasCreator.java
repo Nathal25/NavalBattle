@@ -7,9 +7,9 @@ import javafx.scene.transform.Rotate;
 
 public class FragatasCreator {
     private Polygon fragata;
-
+    private int turns=1;
     private double layoutX;
-    private double layoutY;
+    private double layoutY;;
 
     public FragatasCreator() {
         fragata = new Polygon(
@@ -20,7 +20,6 @@ public class FragatasCreator {
         fragata.setFill(Color.rgb(0, 128, 128));
         fragata.setStroke(Color.rgb(0, 79, 79));
         fragata.setStrokeWidth(1);
-
         // Agrega un evento de click al fragata para detectar clics del usuario
         fragata.setOnMouseClicked(this::handleFragatasClick);
     }
@@ -57,7 +56,19 @@ public class FragatasCreator {
             // Rotar el submarino cuando se hace clic derecho
             fragata.getTransforms().add(new javafx.scene.transform.Rotate(90,16,17));
             System.out.println("Submarino rotado");
-        }
+            turns++;
+            //System.out.println("La cantidad de giros es: "+turns);
+            if (turns == 4) {
+                resetTurns();
+            }
 
+        }
+    }
+    private void resetTurns(){
+        turns=1;
+    }
+
+    public int getTurns() {
+        return turns;
     }
 }
