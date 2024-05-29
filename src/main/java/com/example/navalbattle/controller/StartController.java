@@ -179,6 +179,8 @@ public class StartController extends Stage {
 
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
+        GameStage.getInstance().getGameController();
+        StartStage.deleteInstance();
 
     }
 

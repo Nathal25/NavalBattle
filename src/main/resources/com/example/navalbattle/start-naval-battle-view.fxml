@@ -27,7 +27,7 @@
             </children></HBox>
         <Pane fx:id="basicPane" prefHeight="226.0" prefWidth="407.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
             <children>
-                <Button fx:id="btnStart" alignment="CENTER" layoutX="498.0" layoutY="356.0" maxHeight="33.0" maxWidth="91.0" minHeight="33.0" minWidth="91.0" mnemonicParsing="false" onAction="#onHandleButtonStartGame" prefHeight="33.0" prefWidth="91.0" text="START">
+                <Button fx:id="btnStart" alignment="CENTER" layoutX="498.0" layoutY="356.0" maxHeight="40.0" maxWidth="91.0" minHeight="33.0" minWidth="91.0" mnemonicParsing="false" onAction="#onHandleButtonStartGame" prefHeight="40.0" prefWidth="91.0" text="START">
                     <font>
                         <Font name="Roboto Black" size="20.0" />
                     </font>
