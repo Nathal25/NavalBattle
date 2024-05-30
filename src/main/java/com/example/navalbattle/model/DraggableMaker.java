@@ -1,13 +1,14 @@
 package com.example.navalbattle.model;
 
 import javafx.scene.Node;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DraggableMaker {
     private double posMouseX = 0, posMouseY = 0;
-    private int parentWidth = 682;  // Ancho del AnchorPane
-    private int parentHeight = 408; // Alto del AnchorPane
+    private int parentWidth = 737;  // Ancho del AnchorPane
+    private int parentHeight = 410; // Alto del AnchorPane
     private final double POSITION_X1 = 69;
     private final double POSITION_X2 = 101;
     private final double POSITION_X3 = 133;
@@ -32,9 +33,10 @@ public class DraggableMaker {
     private double closestY;
     private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
     private int id;
-    private IPositionListener positionListener;
+    private List<Integer> validPos=new ArrayList<>();
 
-    public void makeDraggable(Node node) {
+    public void makeDraggable(Node node, int id) {
+        this.id = id;
         if (gameOn) {
             node.setOnMousePressed(mouseEvent -> {
                 posMouseX = mouseEvent.getSceneX() - node.getLayoutX();
@@ -56,15 +58,16 @@ public class DraggableMaker {
             node.setOnMouseReleased(mouseEvent -> {
                 posMouseX = 0;
                 posMouseY = 0;
-                adjustToClosestPosition(node);
-                System.out.println("El elemento movido tiene Id " + id);
+
+                adjustToClosestPosition(node, id);
             });
         } else {
             System.out.println("Game is not on.");
         }
     }
 
-    public void adjustToClosestPosition(Node node) {
+    public void adjustToClosestPosition(Node node, int id) {
+        this.id = id;
         double currentY = node.getLayoutY();
         double[] positionsY = {
                 POSITION_Y1, POSITION_Y2, POSITION_Y3, POSITION_Y4, POSITION_Y5,
@@ -82,6 +85,21 @@ public class DraggableMaker {
             }
         }
 
+        if (id == 41) {
+            System.out.println("Esto es un portaAvion");
+            addValidPos(id);
+        } else if (id == 31 || id == 32) {
+            System.out.println("Esto es el submarino " + id);
+            addValidPos(id);
+        } else if (id == 21 || id == 22 || id == 23) {
+            System.out.println("Esto es el destructor " + id);
+            addValidPos(id);
+        } else if (id == 11 || id == 12 || id == 13 || id == 14) {
+            System.out.println("Esta es la fragata " + id);
+            addValidPos(id);
+        }
+        // Agregar el id a la lista de posiciones válidas
+
         double currentX = node.getLayoutX();
         double[] positionsX = {
                 POSITION_X1, POSITION_X2, POSITION_X3, POSITION_X4, POSITION_X5,
@@ -97,18 +115,24 @@ public class DraggableMaker {
                 minDifferenceX = differenceX;
             }
         }
+
         node.setLayoutY(closestY);
         node.setLayoutX(closestX);
 
-        if (positionListener != null) {
-            positionListener.onPositionChanged(closestX, closestY);
-        }
         System.out.println("-- closestX: " + closestX);
         System.out.println("-- closestY: " + closestY);
+
+// Imprimir la lista de posiciones válidas después de agregar
+        System.out.println("Lista de posiciones válidas: " + validPos);
     }
 
-    public void setPositionListener(IPositionListener positionListener) {
-        this.positionListener = positionListener;
+    public List<Integer> getValidPos() {
+        return validPos;
+    }
+    public void addValidPos(int id) {
+        if(!validPos.contains(id)) {
+            validPos.add(id);
+        }
     }
 
     public double getClosestX() {

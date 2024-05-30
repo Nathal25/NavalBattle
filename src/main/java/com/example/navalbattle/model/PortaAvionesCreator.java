@@ -4,12 +4,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-public class PortaAvionesCreator implements IPositionListener {
+public class PortaAvionesCreator {
     private Polygon portaAviones;
     private double layouty, layoutx;
     private int turns = 1;
     private double posicionesX, posicionesY;
-    private DraggableMaker draggableMaker;
 
     public PortaAvionesCreator() {
         portaAviones = new Polygon(
@@ -38,8 +37,6 @@ public class PortaAvionesCreator implements IPositionListener {
         // Agrega un evento de click al PortaAvion para detectar clics del usuario
         portaAviones.setOnMouseClicked(this::handleRotarClick);
 
-        draggableMaker = new DraggableMaker();
-        draggableMaker.setPositionListener(this); // Aquí se pasa correctamente 'this'
     }
 
     public void setPosicionesX(double posicionesX) {
@@ -61,44 +58,32 @@ public class PortaAvionesCreator implements IPositionListener {
     public double getLayouty() {
         return layouty;
     }
+    public double getLayoutx() {
+        return layoutx;
+    }
 
     public void setLayouty(double layouty) {
         this.layouty = layouty;
         portaAviones.setLayoutY(layouty);
     }
 
-    public double getLayoutx() {
-        return layoutx;
-    }
+
 
     public void setLayoutx(double layoutx) {
         this.layoutx = layoutx;
         portaAviones.setLayoutX(layoutx);
     }
 
-    @Override
-    public void onPositionChanged(double x, double y) {
-        this.posicionesX = x;
-        this.posicionesY = y;
-    }
 
     private void handleRotarClick(javafx.scene.input.MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) { // botón derecho
+
             portaAviones.getTransforms().add(new javafx.scene.transform.Rotate(90, 16, 48));
             System.out.println("PortaAviones rotado");
             turns++;
             System.out.println("La cantidad de giros es: " + turns);
             if (turns == 4) {
                 resetTurns();
-            }
-            if (turns == 1) {
-                System.out.println("La posicion max de Y es: " + (posicionesY + 96));
-            } else if (turns == 2) {
-                System.out.println("La posicion más baja de X es: " + (posicionesX - 96));
-            } else if (turns == 3) {
-                System.out.println("La posicion max de Y es: " + (posicionesY - 96));
-            } else if (turns == 4) {
-                System.out.println("La posicion max de X es: " + (posicionesX - 96));
             }
         }
     }
