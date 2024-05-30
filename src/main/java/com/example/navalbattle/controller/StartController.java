@@ -41,55 +41,64 @@ public class StartController extends Stage {
 
     private DraggableMaker draggableMaker = new DraggableMaker();
     private SubmarinosCreator submarino1,submarino2;
-    private DestructoresCreator destructores1,destructores2;
+    private DestructoresCreator destructores1,destructores2,destructores3;
     private PortaAvionesCreator portaAvion;
     private FiguresCreator base;
     private FragatasCreator fragata1,fragata2,fragata3,fragata4;
 
 
     public void initialize(){
-        destructores1=new DestructoresCreator();
-        destructores1.setLayoutX(570);
-        destructores1.setLayoutY(250);
-
-        destructores2=new DestructoresCreator();
-        destructores2.setLayoutX(525);
-        destructores2.setLayoutY(250);
-
         portaAvion = new PortaAvionesCreator();
         portaAvion.setLayoutx(450);
         portaAvion.setLayouty(85);
 
         submarino1 = new SubmarinosCreator();
-        submarino1.setLayoutX(487);
-        submarino1.setLayoutY(85);
+        submarino1.setLayoutX(510);
+        submarino1.setLayoutY(117);
 
         submarino2 = new SubmarinosCreator();
-        submarino2.setLayoutX(487);
-        submarino2.setLayoutY(200);
+        submarino2.setLayoutX(570);
+        submarino2.setLayoutY(117);
 
-        base = new FiguresCreator();
+        destructores1=new DestructoresCreator();
+        destructores1.setLayoutX(450);
+        destructores1.setLayoutY(245);
+
+        destructores2=new DestructoresCreator();
+        destructores2.setLayoutX(510);
+        destructores2.setLayoutY(245);
+
+        destructores3=new DestructoresCreator();
+        destructores3.setLayoutX(570);
+        destructores3.setLayoutY(245);
 
         fragata1 = new FragatasCreator();
-        fragata1.setLayoutX(525);
+        fragata1.setLayoutX(630);
         fragata1.setLayoutY(85);
+
         fragata2 = new FragatasCreator();
-        fragata2.setLayoutX(560);
-        fragata2.setLayoutY(85);
+        fragata2.setLayoutX(630);
+        fragata2.setLayoutY(149);
+
         fragata3 = new FragatasCreator();
-        fragata3.setLayoutX(594);
-        fragata3.setLayoutY(85);
+        fragata3.setLayoutX(630);
+        fragata3.setLayoutY(213);
+
         fragata4 = new FragatasCreator();
-        fragata4.setLayoutX(628);
-        fragata4.setLayoutY(85);
+        fragata4.setLayoutX(630);
+        fragata4.setLayoutY(277);
+
+        base = new FiguresCreator();
 
         int gridSize = 11; // Tamaño de la cuadrícula
         int paneSize = 352 / gridSize; // Tamaño de cada pane
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
+                String id=String.valueOf(i).concat(String.valueOf(j));
                 // Crear un StackPane
                 StackPane stackPane = new StackPane();
+                stackPane.setId(id);
                 stackPane.setPrefWidth(32);
                 stackPane.setPrefHeight(32);
                 stackPane.setStyle("-fx-background-color: rgb(177,194,255);" +
@@ -106,15 +115,17 @@ public class StartController extends Stage {
 
                 if (i == 0 && j == 0) {
                     // Posición (0,0) nula
-                    stackPane.setStyle("-fx-background-color: rgb(4,19,114);");
+                    stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
+                            "-fx-border-color: rgb(25,43,119);" +
+                            "-fx-stroke-type: inside;");
                 } else if (i == 0) {
                     // Primera fila (letras de la A a la J)
                     Label label = new Label(String.valueOf((char) ('A' + j - 1)));
-                    label.setStyle("-fx-text-fill: #ff762c;" +
+                    label.setStyle("-fx-text-fill: #f6925c;" +
                             "-fx-font-weight: bold;"+
                             "-fx-font-size: 15;");
-                    stackPane.setStyle("-fx-background-color: rgb(4,19,114);" +
-                            "-fx-border-color: rgb(5,19,75);" +
+                    stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
+                            "-fx-border-color: rgb(25,43,119);" +
                             "-fx-stroke-type: inside;");
                     stackPane.setAlignment(Pos.CENTER); // Centrar el contenido vertical y horizontalmente
                     stackPane.getChildren().add(label);
@@ -124,8 +135,8 @@ public class StartController extends Stage {
                     label.setStyle("-fx-text-fill: #ff762c;" +
                             "-fx-font-weight: bold;"+
                             "-fx-font-size: 15;");
-                    stackPane.setStyle("-fx-background-color: rgb(4,19,114);" +
-                            "-fx-border-color: rgb(5,19,75);" +
+                    stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
+                            "-fx-border-color: rgb(25,43,119);" +
                             "-fx-stroke-type: inside;");
                     stackPane.setAlignment(Pos.CENTER); // Centrar el contenido vertical y horizontalmente
                     stackPane.getChildren().add(label);
@@ -152,7 +163,7 @@ public class StartController extends Stage {
             }
         }
 
-        basicPane.getChildren().addAll(portaAvion.getPortaAviones(), fragata1.getFragata(), fragata2.getFragata(),fragata3.getFragata(),fragata4.getFragata(), submarino1.getSubmarino(),submarino2.getSubmarino(),destructores1.getDestructor(),destructores2.getDestructor());
+        basicPane.getChildren().addAll(portaAvion.getPortaAviones(), fragata1.getFragata(), fragata2.getFragata(),fragata3.getFragata(),fragata4.getFragata(), submarino1.getSubmarino(),submarino2.getSubmarino(),destructores1.getDestructor(),destructores2.getDestructor(), destructores3.getDestructor());
 
         draggableMaker.makeDraggable(portaAvion.getPortaAviones());
         draggableMaker.makeDraggable(fragata1.getFragata());
@@ -163,12 +174,12 @@ public class StartController extends Stage {
         draggableMaker.makeDraggable(submarino2.getSubmarino());
         draggableMaker.makeDraggable(destructores1.getDestructor());
         draggableMaker.makeDraggable(destructores2.getDestructor());
+        draggableMaker.makeDraggable(destructores3.getDestructor());
     }
 
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
-        GameStage.getInstance();
-        StartStage.deleteInstance();
+
     }
 
     public Pane getGameBoard() {

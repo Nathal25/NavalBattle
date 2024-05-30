@@ -8,6 +8,9 @@ import javafx.scene.transform.Rotate;
 public class DestructoresCreator {
     private Polygon destructor;
     private double layoutX, layoutY;
+    private int turns=1;
+    private int id=32;
+    private DraggableMaker draggableMaker=new DraggableMaker();
 
     public DestructoresCreator() {
         destructor = new Polygon(
@@ -60,6 +63,23 @@ public class DestructoresCreator {
             // Rotar el submarino cuando se hace clic derecho
             destructor.getTransforms().add(new javafx.scene.transform.Rotate(90, 16, 48));
             System.out.println("Destructor rotado");
+            turns++;
+            //System.out.println("La cantidad de giros es: "+turns);
+            if (turns == 4) {
+                resetTurns();
+            }
         }
+    }
+
+    private void resetTurns(){
+        turns=1;
+    }
+
+    public int getTurns() {
+        return turns;
+    }
+
+    public int getId() {
+        return id;
     }
 }
