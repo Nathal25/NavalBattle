@@ -10,7 +10,6 @@ public class DestructoresCreator {
     private double layoutX, layoutY;
     private int turns=1;
     private int id=32;
-    private DraggableMaker draggableMaker=new DraggableMaker();
 
     public DestructoresCreator() {
         destructor = new Polygon(
