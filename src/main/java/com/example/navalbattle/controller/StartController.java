@@ -158,16 +158,16 @@ public class StartController extends Stage {
 
         basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(),fragata3.getShape(),fragata4.getShape(), submarino1.getShape(),submarino2.getShape(),destructores1.getShape(),destructores2.getShape(), destructores3.getShape());
 
-        draggableMaker.makeDraggable(portaAvion.getShape(),41);
-        draggableMaker.makeDraggable(fragata1.getShape(),11);
-        draggableMaker.makeDraggable(fragata2.getShape(),12);
-        draggableMaker.makeDraggable(fragata3.getShape(),13);
-        draggableMaker.makeDraggable(fragata4.getShape(),14);
-        draggableMaker.makeDraggable(submarino1.getShape(),31);
-        draggableMaker.makeDraggable(submarino2.getShape(),32);
-        draggableMaker.makeDraggable(destructores1.getShape(),21);
-        draggableMaker.makeDraggable(destructores2.getShape(),22);
-        draggableMaker.makeDraggable(destructores3.getShape(),23);
+        draggableMaker.makeDraggable(portaAvion.getShape(),41, portaAvion);
+        draggableMaker.makeDraggable(fragata1.getShape(),11, fragata1);
+        draggableMaker.makeDraggable(fragata2.getShape(),12, fragata2);
+        draggableMaker.makeDraggable(fragata3.getShape(),13, fragata3);
+        draggableMaker.makeDraggable(fragata4.getShape(),14, fragata4);
+        draggableMaker.makeDraggable(submarino1.getShape(),31, submarino1);
+        draggableMaker.makeDraggable(submarino2.getShape(),32, submarino2);
+        draggableMaker.makeDraggable(destructores1.getShape(),21, destructores1);
+        draggableMaker.makeDraggable(destructores2.getShape(),22, destructores2);
+        draggableMaker.makeDraggable(destructores3.getShape(),23, destructores3);
     }
     private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
         figure.setLayoutX(layoutX);
@@ -252,6 +252,8 @@ public class StartController extends Stage {
                                     ". El id es " + stackPane.getId());
                             if (shipsPositions.getShipsPositions().contains(stackPane.getId())) {
                                 System.out.println("Acá hay un barco");
+                            } else{
+                                System.out.println("Hay agua");
                             }
                         });
                     }

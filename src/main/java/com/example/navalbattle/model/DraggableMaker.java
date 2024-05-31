@@ -35,7 +35,7 @@ public class DraggableMaker {
     private int id;
     private List<Integer> validPos=new ArrayList<>();
 
-    public void makeDraggable(Node node, int id) {
+    public void makeDraggable(Node node, int id, ShapeCreator shape) {
         this.id = id;
         if (gameOn) {
             node.setOnMousePressed(mouseEvent -> {
@@ -47,11 +47,9 @@ public class DraggableMaker {
                 double newX = mouseEvent.getSceneX() - posMouseX;
                 double newY = mouseEvent.getSceneY() - posMouseY;
 
-                if (newX >= 0 && newX <= parentWidth - node.getBoundsInParent().getWidth()) {
-                    node.setLayoutX(newX);
-                }
-                if (newY >= 0 && newY <= parentHeight - node.getBoundsInParent().getHeight()) {
-                    node.setLayoutY(newY);
+                if (isWithinBounds(newX, newY, shape)) {
+                    System.out.println("Movimiento permitido");
+                    node.relocate(newX, newY);
                 }
             });
 
@@ -125,7 +123,20 @@ public class DraggableMaker {
 // Imprimir la lista de posiciones válidas después de agregar
         System.out.println("Lista de posiciones válidas: " + validPos);
     }
+    private boolean isWithinBounds(double newX, double newY, ShapeCreator shape){
+        for (int i = 0; i < shape.getVertices().length; i += 2){
+            double x = shape.getVerticeIn(i);
+            double y = shape.getVerticeIn(i+ 1);
 
+            double transformedX = newX + x;
+            double transformedY = newY + y;
+
+            if (transformedX < 0 || transformedX > parentWidth || transformedY < 0 || transformedY > parentHeight){
+                return false;
+            }
+        }
+        return true;
+    }
     public List<Integer> getValidPos() {
         return validPos;
     }

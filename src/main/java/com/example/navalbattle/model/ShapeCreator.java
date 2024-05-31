@@ -4,18 +4,22 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShapeCreator implements IShapeCreator {
+    protected double[] vertices;
     protected Polygon shape;
     protected double layoutX, layoutY;
     protected int turns = 1;
 
     public ShapeCreator(double[] points, Color fillColor, Color strokeColor) {
         shape = new Polygon(points);
+        this.vertices = points;
         shape.setFill(fillColor);
         shape.setStroke(strokeColor);
         shape.setStrokeWidth(1);
-
         shape.setOnMouseClicked(this::handleRotateClick);
     }
 
@@ -70,5 +74,14 @@ public class ShapeCreator implements IShapeCreator {
                 resetTurns();
             }
         }
+    }
+
+    @Override
+        public double[] getVertices(){
+        return vertices;
+    }
+    @Override
+        public double getVerticeIn(int index){
+        return this.vertices[index];
     }
 }

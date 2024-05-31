@@ -17,6 +17,7 @@ import java.io.IOException;
 /**
  * @author Nathalia Ortiz
  * @author Sara Yineth
+ * @author JuanPablo Arce Bueno
  */
 public class main extends Application {
 
