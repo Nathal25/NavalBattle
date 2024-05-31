@@ -52,12 +52,37 @@ public class ShipsPositions {
         secondBoard.add("G8");
         secondBoard.add("D10");
 
-        int enemyBoard=(int)(Math.random()*2);
+        List<String> thirdBoard=new ArrayList<>();
+        thirdBoard.add("A10");
+        thirdBoard.add("B1");
+        thirdBoard.add("B2");
+        thirdBoard.add("B3");
+        thirdBoard.add("B4");
+        thirdBoard.add("B7");
+        thirdBoard.add("B8");
+        thirdBoard.add("D2");
+        thirdBoard.add("D10");
+        thirdBoard.add("E3");
+        thirdBoard.add("E4");
+        thirdBoard.add("E5");
+        thirdBoard.add("F3");
+        thirdBoard.add("G3");
+        thirdBoard.add("H3");
+        thirdBoard.add("F7");
+        thirdBoard.add("G7");
+        thirdBoard.add("I4");
+        thirdBoard.add("J6");
+        thirdBoard.add("J7");
+
+        int enemyBoard=(int)(Math.random()*3);
         if(enemyBoard == 0){
             shipsPositions=firstBoard;
         }
         if(enemyBoard == 1){
             shipsPositions=secondBoard;
+        }
+        if(enemyBoard==2){
+            shipsPositions=thirdBoard;
         }
 
     }
