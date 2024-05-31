@@ -252,8 +252,17 @@ public class StartController extends Stage {
                                     ". El id es " + stackPane.getId());
                             if (shipsPositions.getShipsPositions().contains(stackPane.getId())) {
                                 System.out.println("Acá hay un barco");
+                                Touched.addTocado(stackPane);
+                            } else {
+                                System.out.println("Hay agua");
+                                Water.addAgua(stackPane);
+                                if (Touched.maximumCounter()) {
+                                    Water.addAgua(stackPane);
+                                    System.out.println("Ganastes(Usuario)");
+                                }
                             }
                         });
+
                     }
                     boardMachine.add(stackPane, j, i);
                 }
