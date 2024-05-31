@@ -50,44 +50,35 @@ public class StartController extends Stage {
     public void initialize(){
         draggableMaker = new DraggableMaker();
         portaAvion = new PortaAvionesCreator();
-        portaAvion.setLayoutx(450);
-        portaAvion.setLayouty(85);
+        setFigureLayout(portaAvion, 450, 85);
 
         submarino1 = new SubmarinosCreator();
-        submarino1.setLayoutX(500);
-        submarino1.setLayoutY(117);
+        setFigureLayout(submarino1, 500, 117);
 
         submarino2 = new SubmarinosCreator();
-        submarino2.setLayoutX(550);
-        submarino2.setLayoutY(117);
+        setFigureLayout(submarino2, 550, 117);
 
         destructores1=new DestructoresCreator();
-        destructores1.setLayoutX(450);
-        destructores1.setLayoutY(245);
+        setFigureLayout(destructores1,450,245);
 
         destructores2=new DestructoresCreator();
-        destructores2.setLayoutX(500);
-        destructores2.setLayoutY(245);
+        setFigureLayout(destructores2,550,245);
 
         destructores3=new DestructoresCreator();
-        destructores3.setLayoutX(550);
-        destructores3.setLayoutY(245);
+        setFigureLayout(destructores3,550,245);
+
 
         fragata1 = new FragatasCreator();
-        fragata1.setLayoutX(600);
-        fragata1.setLayoutY(85);
+        setFigureLayout(fragata1,600,85);
 
         fragata2 = new FragatasCreator();
-        fragata2.setLayoutX(600);
-        fragata2.setLayoutY(149);
+        setFigureLayout(fragata2,600,149);
 
         fragata3 = new FragatasCreator();
-        fragata3.setLayoutX(600);
-        fragata3.setLayoutY(213);
+        setFigureLayout(fragata3,600,213);
 
         fragata4 = new FragatasCreator();
-        fragata4.setLayoutX(600);
-        fragata4.setLayoutY(277);
+        setFigureLayout(fragata4,600,277);
 
         base = new FiguresCreator();
 
@@ -165,18 +156,22 @@ public class StartController extends Stage {
         }
 
 
-        basicPane.getChildren().addAll(portaAvion.getPortaAviones(), fragata1.getFragata(), fragata2.getFragata(),fragata3.getFragata(),fragata4.getFragata(), submarino1.getSubmarino(),submarino2.getSubmarino(),destructores1.getDestructor(),destructores2.getDestructor(), destructores3.getDestructor());
+        basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(),fragata3.getShape(),fragata4.getShape(), submarino1.getShape(),submarino2.getShape(),destructores1.getShape(),destructores2.getShape(), destructores3.getShape());
 
-        draggableMaker.makeDraggable(portaAvion.getPortaAviones(),41);
-        draggableMaker.makeDraggable(fragata1.getFragata(),11);
-        draggableMaker.makeDraggable(fragata2.getFragata(),12);
-        draggableMaker.makeDraggable(fragata3.getFragata(),13);
-        draggableMaker.makeDraggable(fragata4.getFragata(),14);
-        draggableMaker.makeDraggable(submarino1.getSubmarino(),31);
-        draggableMaker.makeDraggable(submarino2.getSubmarino(),32);
-        draggableMaker.makeDraggable(destructores1.getDestructor(),21);
-        draggableMaker.makeDraggable(destructores2.getDestructor(),22);
-        draggableMaker.makeDraggable(destructores3.getDestructor(),23);
+        draggableMaker.makeDraggable(portaAvion.getShape(),41);
+        draggableMaker.makeDraggable(fragata1.getShape(),11);
+        draggableMaker.makeDraggable(fragata2.getShape(),12);
+        draggableMaker.makeDraggable(fragata3.getShape(),13);
+        draggableMaker.makeDraggable(fragata4.getShape(),14);
+        draggableMaker.makeDraggable(submarino1.getShape(),31);
+        draggableMaker.makeDraggable(submarino2.getShape(),32);
+        draggableMaker.makeDraggable(destructores1.getShape(),21);
+        draggableMaker.makeDraggable(destructores2.getShape(),22);
+        draggableMaker.makeDraggable(destructores3.getShape(),23);
+    }
+    private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
+        figure.setLayoutX(layoutX);
+        figure.setLayoutY(layoutY);
     }
 
     @FXML
