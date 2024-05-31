@@ -31,5 +31,4 @@ public class main extends Application {
         StartStage.getInstance();
     }
 
-
 }
