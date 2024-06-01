@@ -150,7 +150,8 @@ public class StartController extends Stage {
                         System.out.println("La posicion en x es: " + stackPane.getLayoutX() +
                                 ", y es: " + stackPane.getLayoutY() +
                                 ". El id es " + stackPane.getId());
-                    });
+
+                        });
                 }
             }
         }
@@ -176,6 +177,8 @@ public class StartController extends Stage {
 
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
+
+
         int listSize=draggableMaker.getValidPos().size();
         System.out.println("El tamaño de la lista es: "+draggableMaker.getValidPos().size());
 
@@ -185,6 +188,7 @@ public class StartController extends Stage {
         }
         else {
 
+            imprimirPosicionesFinales();// METODO DE POSICIONES FINALES
             shipsPositions=new ShipsPositions();
             basicGrid.setPrefWidth(855);
             Scene scene = basicGrid.getScene();
@@ -272,7 +276,14 @@ public class StartController extends Stage {
             basicPane.getChildren().add(boardMachine);
             btnStart.setVisible(false);
         }
+
     }
+
+    public void imprimirPosicionesFinales() {
+        // Imprime las posiciones finales de los barcos utilizando DraggableMarker
+        draggableMaker.imprimirPosicionesFinales();
+    }
+
 
     public Pane getGameBoard() {
         return gameBoard;

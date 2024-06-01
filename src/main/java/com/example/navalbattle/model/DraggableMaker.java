@@ -3,7 +3,9 @@ package com.example.navalbattle.model;
 import javafx.scene.Node;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DraggableMaker {
     private double posMouseX = 0, posMouseY = 0;
@@ -33,7 +35,7 @@ public class DraggableMaker {
     private double closestY;
     private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
     private int id;
-    private List<Integer> validPos=new ArrayList<>();
+    private List<Integer> validPos = new ArrayList<>();
 
     public void makeDraggable(Node node, int id) {
         this.id = id;
@@ -65,6 +67,9 @@ public class DraggableMaker {
             System.out.println("Game is not on.");
         }
     }
+
+    //se utilizo map porquee facilita guardar la ultima posicion del barco puesta por el usuario
+    private Map<Integer, String> ultimasPosiciones = new HashMap<>();
 
     public void adjustToClosestPosition(Node node, int id) {
         this.id = id;
@@ -121,33 +126,58 @@ public class DraggableMaker {
 
         System.out.println("-- closestX: " + closestX);
         System.out.println("-- closestY: " + closestY);
+        System.out.println("ACA HAY UN BARCO");
 
-// Imprimir la lista de posiciones válidas después de agregar
         System.out.println("Lista de posiciones válidas: " + validPos);
+
+        String ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
+        ultimasPosiciones.put(id,ultimaPosicion);
+
+        // Imprime la última posición del barco
+        System.out.println("Última posición de Barco : " + ultimaPosicion);
+        System.out.println("Posición de cuadrícula calculada: " + convertToGridPosition(closestX, closestY));
+
+
+    }
+    //Posicion a posicion tipo gridv 32*32
+    private String convertToGridPosition(double x, double y) {
+        int column = (int) ((x - POSITION_X1) / 32) + 1;
+        int row = (int) ((y - POSITION_Y1) / 32) + 1;
+        System.out.println("Columna calculada: " + column + ", Fila calculada: " + row);
+        return "(" + row + ", " + column + ")";
     }
 
-    public List<Integer> getValidPos() {
-        return validPos;
-    }
-    public void addValidPos(int id) {
-        if(!validPos.contains(id)) {
-            validPos.add(id);
+    //Imprime las ultima posicion de cada barco (No deja historial)
+    public void imprimirPosicionesFinales() {
+        System.out.println("Posiciones finales de todos los barcos:");
+        for (String posicion : ultimasPosiciones.values()) {
+            System.out.println(posicion);
         }
     }
 
-    public double getClosestX() {
-        return closestX;
-    }
 
-    public double getClosestY() {
-        return closestY;
-    }
+    public List<Integer> getValidPos () {
+            return validPos;
+        }
+        public void addValidPos ( int id){
+            if (!validPos.contains(id)) {
+                validPos.add(id);
+            }
+        }
 
-    public boolean isGameOn() {
-        return gameOn;
-    }
+        public double getClosestX () {
+            return closestX;
+        }
 
-    public void setGameOn(boolean gameOn) {
-        this.gameOn = gameOn;
+        public double getClosestY () {
+            return closestY;
+        }
+
+        public boolean isGameOn () {
+            return gameOn;
+        }
+
+        public void setGameOn ( boolean gameOn){
+            this.gameOn = gameOn;
+        }
     }
-}
