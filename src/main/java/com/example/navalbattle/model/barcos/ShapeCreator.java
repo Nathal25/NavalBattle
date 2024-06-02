@@ -4,7 +4,6 @@ import com.example.navalbattle.model.DraggableMaker;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.transform.Rotate;
 
 public class ShapeCreator implements IShapeCreator {
     protected int id;
@@ -67,8 +66,8 @@ public class ShapeCreator implements IShapeCreator {
     }
 
     @Override
-    public void resetTurns() {
-        turns = 1;
+    public void setTurns() {
+        turns=1;
     }
 
     private void handleRotateClick(javafx.scene.input.MouseEvent mouseEvent) {
@@ -77,21 +76,7 @@ public class ShapeCreator implements IShapeCreator {
             if(layoutX!=357 && layoutY!=373){
                 if (idStr.charAt(0) == '4') {
                     if (turns == 1) {
-                        shape.getPoints().setAll(0.0,16.0,
-                                32.0,0.0,
-                                32.0,16.0,
-                                64.0,0.0,
-                                64.0,16.0,
-                                96.0,0.0,
-                                96.0,16.0,
-                                128.0,0.0,
-                                128.0,32.0,
-                                96.0,16.0,
-                                96.0,32.0,
-                                64.0,16.0,
-                                64.0,32.0,
-                                32.0,16.0,
-                                32.0,32.0);
+                        shape.getPoints().setAll(0.0,16.0,32.0,0.0,32.0,16.0,64.0,0.0,64.0,16.0,96.0,0.0,96.0,16.0,128.0,0.0,128.0,32.0,96.0,16.0,96.0,32.0,64.0,16.0,64.0,32.0,32.0,16.0, 32.0,32.0);
                     } else if (turns == 2) {
                         shape.getPoints().setAll(0.0, 32.0, 16.0, 0.0, 32.0, 32.0, 16.0, 32.0, 32.0, 64.0, 16.0, 64.0, 32.0, 96.0, 16.0, 96.0, 32.0, 128.0, 0.0, 128.0, 16.0, 96.0, 0.0, 96.0, 16.0, 64.0, 0.0, 64.0, 16.0, 32.0, 0.0, 32.0);
                     }
@@ -119,9 +104,10 @@ public class ShapeCreator implements IShapeCreator {
                 }
                 }
             turns++;
-            if (turns > 2) {
-                resetTurns();
+            if (turns>2){
+                setTurns();
             }
+            System.out.println("La cantidad de giros son "+turns);
             setLayoutX(shape.getLayoutX()); // Actualizar layoutXsetLayoutY(shape.getLayoutY()); // Actualizar layoutY
             }
             System.out.println("Shape rotated");

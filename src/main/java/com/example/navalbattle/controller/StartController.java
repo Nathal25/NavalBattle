@@ -206,7 +206,7 @@ private void setFigureId(IShapeCreator figure, int id) {
             Scene scene = basicGrid.getScene();
             if (scene != null) {
                 scene.getWindow().setWidth(855);
-
+                scene.getWindow().centerOnScreen();
             }
             GridPane boardMachine=new GridPane();
             for (int i = 0; i < 11; i++) {

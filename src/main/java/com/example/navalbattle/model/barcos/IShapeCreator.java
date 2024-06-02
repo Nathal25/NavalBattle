@@ -12,5 +12,5 @@ public interface IShapeCreator {
     double getLayoutY();
     void setLayoutY(double layoutY);
     int getTurns();
-    void resetTurns();
+    void setTurns();
 }
