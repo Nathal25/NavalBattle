@@ -1,10 +1,8 @@
-package com.example.navalbattle.model;
+package com.example.navalbattle.model.barcos;
 
-import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
-public class PortaAvionesCreator extends ShapeCreator{
+public class PortaAvionesCreator extends ShapeCreator {
     public PortaAvionesCreator() {
         super(new double[]{
                 0, 32, 16, 0, 32, 32, 16, 32, 32, 64, 16, 64, 32, 96, 16, 96,

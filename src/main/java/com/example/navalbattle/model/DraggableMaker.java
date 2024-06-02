@@ -1,5 +1,6 @@
 package com.example.navalbattle.model;
 
+import com.example.navalbattle.model.barcos.ShapeCreator;
 import javafx.scene.Node;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class DraggableMaker {
     private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
     private int id;
     private List<Integer> validPos = new ArrayList<>();
+    //se utilizo map porquee facilita guardar la ultima posicion del barco puesta por el usuario
+    private Map<Integer, String> ultimasPosiciones = new HashMap<>();
 
     public void makeDraggable(Node node, int id) {
         this.id = id;
@@ -68,8 +71,7 @@ public class DraggableMaker {
         }
     }
 
-    //se utilizo map porquee facilita guardar la ultima posicion del barco puesta por el usuario
-    private Map<Integer, String> ultimasPosiciones = new HashMap<>();
+
 
     public void adjustToClosestPosition(Node node, int id) {
         this.id = id;
@@ -132,7 +134,7 @@ public class DraggableMaker {
 
         String ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
         ultimasPosiciones.put(id,ultimaPosicion);
-
+        agregarPosiciones(id,closestX,closestY);
         // Imprime la última posición del barco
         System.out.println("Última posición de Barco : " + ultimaPosicion);
         System.out.println("Posición de cuadrícula calculada: " + convertToGridPosition(closestX, closestY));
@@ -155,29 +157,47 @@ public class DraggableMaker {
         }
     }
 
+    public void agregarPosiciones(int id, double closestX, double closestY) {
+        String ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
+        ultimasPosiciones.put(id, ultimaPosicion);
 
+        // Obtener el primer dígito del id
+        int primerDigito = Integer.parseInt(Integer.toString(id).substring(0, 1));
+
+        // Si el primer dígito es 2, 3 o 4, añadir posiciones adicionales
+        if (primerDigito >= 2 && primerDigito <= 4) {
+            for (int i = 1; i < primerDigito; i++) {
+                closestY += 32;
+                ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
+                ultimasPosiciones.put(id * 10 + (i + 1), ultimaPosicion);
+            }
+        }
+    }
     public List<Integer> getValidPos () {
             return validPos;
         }
-        public void addValidPos ( int id){
-            if (!validPos.contains(id)) {
-                validPos.add(id);
-            }
-        }
-
-        public double getClosestX () {
-            return closestX;
-        }
-
-        public double getClosestY () {
-            return closestY;
-        }
-
-        public boolean isGameOn () {
-            return gameOn;
-        }
-
-        public void setGameOn ( boolean gameOn){
-            this.gameOn = gameOn;
+    public void addValidPos ( int id){
+        if (!validPos.contains(id)) {
+            validPos.add(id);
         }
     }
+
+    public double getClosestX () {
+        return closestX;
+    }
+
+    public double getClosestY () {
+        return closestY;
+    }
+    public boolean isGameOn () {
+        return gameOn;
+    }
+
+    public void setGameOn ( boolean gameOn){
+        this.gameOn = gameOn;
+    }
+
+    public Map<Integer, String> getUltimasPosiciones() {
+        return ultimasPosiciones;
+    }
+}

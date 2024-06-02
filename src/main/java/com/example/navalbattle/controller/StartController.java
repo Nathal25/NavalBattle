@@ -1,6 +1,11 @@
 package com.example.navalbattle.controller;
 
 import com.example.navalbattle.model.*;
+import com.example.navalbattle.model.barcos.DestructoresCreator;
+import com.example.navalbattle.model.barcos.FragatasCreator;
+import com.example.navalbattle.model.barcos.PortaAvionesCreator;
+import com.example.navalbattle.model.barcos.SubmarinosCreator;
+import com.example.navalbattle.model.barcos.IShapeCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -14,6 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This class generates the first stage designed to put
@@ -44,7 +50,6 @@ public class StartController extends Stage {
     private SubmarinosCreator submarino1,submarino2;
     private DestructoresCreator destructores1,destructores2,destructores3;
     private PortaAvionesCreator portaAvion;
-    private FiguresCreator base;
     private FragatasCreator fragata1,fragata2,fragata3,fragata4;
 
     public void initialize(){
@@ -80,7 +85,6 @@ public class StartController extends Stage {
         fragata4 = new FragatasCreator();
         setFigureLayout(fragata4,600,277);
 
-        base = new FiguresCreator();
 
         int gridSize = 11; // Tamaño de la cuadrícula
         int paneSize = 352 / gridSize; // Tamaño de cada pane
@@ -150,8 +154,7 @@ public class StartController extends Stage {
                         System.out.println("La posicion en x es: " + stackPane.getLayoutX() +
                                 ", y es: " + stackPane.getLayoutY() +
                                 ". El id es " + stackPane.getId());
-
-                        });
+                    });
                 }
             }
         }
@@ -177,8 +180,6 @@ public class StartController extends Stage {
 
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
-
-
         int listSize=draggableMaker.getValidPos().size();
         System.out.println("El tamaño de la lista es: "+draggableMaker.getValidPos().size());
 
@@ -188,7 +189,6 @@ public class StartController extends Stage {
         }
         else {
 
-            imprimirPosicionesFinales();// METODO DE POSICIONES FINALES
             shipsPositions=new ShipsPositions();
             basicGrid.setPrefWidth(855);
             Scene scene = basicGrid.getScene();
@@ -275,13 +275,8 @@ public class StartController extends Stage {
             boardMachine.setLayoutY(53);
             basicPane.getChildren().add(boardMachine);
             btnStart.setVisible(false);
+            draggableMaker.imprimirPosicionesFinales();
         }
-
-    }
-
-    public void imprimirPosicionesFinales() {
-        // Imprime las posiciones finales de los barcos utilizando DraggableMarker
-        draggableMaker.imprimirPosicionesFinales();
     }
 
 

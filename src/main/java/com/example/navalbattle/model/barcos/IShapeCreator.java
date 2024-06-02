@@ -1,4 +1,4 @@
-package com.example.navalbattle.model;
+package com.example.navalbattle.model.barcos;
 
 import javafx.scene.shape.Polygon;
 
