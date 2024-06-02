@@ -10,5 +10,7 @@ module com.example.navalbattle {
     exports com.example.navalbattle;
     exports com.example.navalbattle.model;
     opens com.example.navalbattle.model to javafx.fxml;
+    exports com.example.navalbattle.model.barcos;
+    opens com.example.navalbattle.model.barcos to javafx.fxml;
 
 }

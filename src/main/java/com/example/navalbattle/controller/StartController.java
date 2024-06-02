@@ -1,6 +1,11 @@
 package com.example.navalbattle.controller;
 
 import com.example.navalbattle.model.*;
+import com.example.navalbattle.model.barcos.DestructoresCreator;
+import com.example.navalbattle.model.barcos.FragatasCreator;
+import com.example.navalbattle.model.barcos.PortaAvionesCreator;
+import com.example.navalbattle.model.barcos.SubmarinosCreator;
+import com.example.navalbattle.model.barcos.IShapeCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -14,6 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This class generates the first stage designed to put
@@ -44,7 +50,6 @@ public class StartController extends Stage {
     private SubmarinosCreator submarino1,submarino2;
     private DestructoresCreator destructores1,destructores2,destructores3;
     private PortaAvionesCreator portaAvion;
-    private FiguresCreator base;
     private FragatasCreator fragata1,fragata2,fragata3,fragata4;
 
     public void initialize(){
@@ -80,7 +85,6 @@ public class StartController extends Stage {
         fragata4 = new FragatasCreator();
         setFigureLayout(fragata4,600,277);
 
-        base = new FiguresCreator();
 
         int gridSize = 11; // Tamaño de la cuadrícula
         int paneSize = 352 / gridSize; // Tamaño de cada pane
@@ -252,8 +256,17 @@ public class StartController extends Stage {
                                     ". El id es " + stackPane.getId());
                             if (shipsPositions.getShipsPositions().contains(stackPane.getId())) {
                                 System.out.println("Acá hay un barco");
+                                Touched.addTocado(stackPane);
+                            } else {
+                                System.out.println("Hay agua");
+                                Water.addAgua(stackPane);
+                                if (Touched.maximumCounter()) {
+                                    Water.addAgua(stackPane);
+                                    System.out.println("Ganastes(Usuario)");
+                                }
                             }
                         });
+
                     }
                     boardMachine.add(stackPane, j, i);
                 }
@@ -262,8 +275,10 @@ public class StartController extends Stage {
             boardMachine.setLayoutY(53);
             basicPane.getChildren().add(boardMachine);
             btnStart.setVisible(false);
+            draggableMaker.imprimirPosicionesFinales();
         }
     }
+
 
     public Pane getGameBoard() {
         return gameBoard;

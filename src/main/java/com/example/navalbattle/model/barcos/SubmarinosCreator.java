@@ -1,9 +1,7 @@
-package com.example.navalbattle.model;
+package com.example.navalbattle.model.barcos;
 
 
-import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 public class SubmarinosCreator extends ShapeCreator {
     public SubmarinosCreator() {
