@@ -13,9 +13,9 @@
 <GridPane fx:id="basicGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.navalbattle.controller.StartController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="412.0" minWidth="10.0" prefWidth="412.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="56.666656494140625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="56.666656494140625" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="187.33334350585938" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="272.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="272.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
@@ -29,7 +29,7 @@
             </children></HBox>
         <Pane fx:id="basicPane" prefHeight="226.0" prefWidth="407.0" GridPane.columnSpan="4" GridPane.rowIndex="1" GridPane.rowSpan="2">
             <children>
-                <Button fx:id="btnStart" alignment="CENTER" layoutX="407.0" layoutY="372.0" maxHeight="38.0" maxWidth="91.0" minHeight="33.0" minWidth="91.0" mnemonicParsing="false" onAction="#onHandleButtonStartGame" prefHeight="38.0" prefWidth="91.0" text="START">
+                <Button fx:id="btnStart" alignment="CENTER" layoutX="407.0" layoutY="372.0" maxHeight="33.0" maxWidth="91.0" minHeight="33.0" minWidth="91.0" mnemonicParsing="false" onAction="#onHandleButtonStartGame" prefHeight="33.0" prefWidth="91.0" text="START">
                     <font>
                         <Font name="Roboto Black" size="20.0" />
                     </font>

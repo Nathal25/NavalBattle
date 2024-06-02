@@ -1,6 +1,9 @@
 package com.example.navalbattle.model;
 
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
 
 public class DestructoresCreator extends ShapeCreator{
     public DestructoresCreator() {
