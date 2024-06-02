@@ -67,7 +67,7 @@ public class StartController extends Stage {
         setFigureLayout(destructores1,450,245);
 
         destructores2=new DestructoresCreator();
-        setFigureLayout(destructores2,550,245);
+        setFigureLayout(destructores2,500,245);
 
         destructores3=new DestructoresCreator();
         setFigureLayout(destructores3,550,245);
