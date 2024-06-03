@@ -56,34 +56,44 @@ public class StartController extends Stage {
         draggableMaker = new DraggableMaker();
         portaAvion = new PortaAvionesCreator();
         setFigureLayout(portaAvion, 450, 85);
+        setFigureId(portaAvion,41);
 
         submarino1 = new SubmarinosCreator();
         setFigureLayout(submarino1, 500, 117);
+        setFigureId(submarino1,31);
 
         submarino2 = new SubmarinosCreator();
         setFigureLayout(submarino2, 550, 117);
+        setFigureId(submarino2,32);
 
         destructores1=new DestructoresCreator();
         setFigureLayout(destructores1,450,245);
+        setFigureId(destructores1,21);
 
         destructores2=new DestructoresCreator();
-        setFigureLayout(destructores2,550,245);
+        setFigureLayout(destructores2,500,245);
+        setFigureId(destructores2,22);
 
         destructores3=new DestructoresCreator();
         setFigureLayout(destructores3,550,245);
+        setFigureId(destructores3,23);
 
 
         fragata1 = new FragatasCreator();
         setFigureLayout(fragata1,600,85);
+        setFigureId(fragata1,11);
 
         fragata2 = new FragatasCreator();
         setFigureLayout(fragata2,600,149);
+        setFigureId(fragata2,12);
 
         fragata3 = new FragatasCreator();
         setFigureLayout(fragata3,600,213);
+        setFigureId(fragata3,13);
 
         fragata4 = new FragatasCreator();
         setFigureLayout(fragata4,600,277);
+        setFigureId(fragata4,14);
 
 
         int gridSize = 11; // Tamaño de la cuadrícula
@@ -162,22 +172,24 @@ public class StartController extends Stage {
 
         basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(),fragata3.getShape(),fragata4.getShape(), submarino1.getShape(),submarino2.getShape(),destructores1.getShape(),destructores2.getShape(), destructores3.getShape());
 
-        draggableMaker.makeDraggable(portaAvion.getShape(),41);
-        draggableMaker.makeDraggable(fragata1.getShape(),11);
-        draggableMaker.makeDraggable(fragata2.getShape(),12);
-        draggableMaker.makeDraggable(fragata3.getShape(),13);
-        draggableMaker.makeDraggable(fragata4.getShape(),14);
-        draggableMaker.makeDraggable(submarino1.getShape(),31);
-        draggableMaker.makeDraggable(submarino2.getShape(),32);
-        draggableMaker.makeDraggable(destructores1.getShape(),21);
-        draggableMaker.makeDraggable(destructores2.getShape(),22);
-        draggableMaker.makeDraggable(destructores3.getShape(),23);
+        draggableMaker.makeDraggable(portaAvion.getShape(),portaAvion);
+        draggableMaker.makeDraggable(fragata1.getShape(), fragata1);
+        draggableMaker.makeDraggable(fragata2.getShape(), fragata2);
+        draggableMaker.makeDraggable(fragata3.getShape(), fragata3);
+        draggableMaker.makeDraggable(fragata4.getShape(), fragata4);
+        draggableMaker.makeDraggable(submarino1.getShape(),submarino1);
+        draggableMaker.makeDraggable(submarino2.getShape(),submarino2);
+        draggableMaker.makeDraggable(destructores1.getShape(),destructores1);
+        draggableMaker.makeDraggable(destructores2.getShape(),destructores2);
+        draggableMaker.makeDraggable(destructores3.getShape(),destructores3);
     }
     private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
         figure.setLayoutX(layoutX);
         figure.setLayoutY(layoutY);
     }
-
+private void setFigureId(IShapeCreator figure, int id) {
+        figure.setId(id);
+}
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
         int listSize=draggableMaker.getValidPos().size();
@@ -194,7 +206,7 @@ public class StartController extends Stage {
             Scene scene = basicGrid.getScene();
             if (scene != null) {
                 scene.getWindow().setWidth(855);
-
+                scene.getWindow().centerOnScreen();
             }
             GridPane boardMachine=new GridPane();
             for (int i = 0; i < 11; i++) {

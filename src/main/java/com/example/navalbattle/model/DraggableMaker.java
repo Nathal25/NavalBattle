@@ -1,5 +1,6 @@
 package com.example.navalbattle.model;
 
+import com.example.navalbattle.model.barcos.IShapeCreator;
 import com.example.navalbattle.model.barcos.ShapeCreator;
 import javafx.scene.Node;
 
@@ -35,13 +36,12 @@ public class DraggableMaker {
     private double closestX;
     private double closestY;
     private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
-    private int id;
+    private int turns=1;
     private List<Integer> validPos = new ArrayList<>();
     //se utilizo map porquee facilita guardar la ultima posicion del barco puesta por el usuario
     private Map<Integer, String> ultimasPosiciones = new HashMap<>();
 
-    public void makeDraggable(Node node, int id) {
-        this.id = id;
+    public void makeDraggable(Node node, ShapeCreator shapeCreator) {
         if (gameOn) {
             node.setOnMousePressed(mouseEvent -> {
                 posMouseX = mouseEvent.getSceneX() - node.getLayoutX();
@@ -64,17 +64,17 @@ public class DraggableMaker {
                 posMouseX = 0;
                 posMouseY = 0;
 
-                adjustToClosestPosition(node, id);
+                adjustToClosestPosition(node,shapeCreator);
+                shapeCreator.setLayoutX(node.getLayoutX()); // Actualizar layoutX en ShapeCreator
+                shapeCreator.setLayoutY(node.getLayoutY()); // Actualizar layoutY en ShapeCreator
             });
         } else {
             System.out.println("Game is not on.");
         }
     }
 
-
-
-    public void adjustToClosestPosition(Node node, int id) {
-        this.id = id;
+    public void adjustToClosestPosition(Node node, ShapeCreator shapeCreator) {
+        int id = shapeCreator.getId();
         double currentY = node.getLayoutY();
         double[] positionsY = {
                 POSITION_Y1, POSITION_Y2, POSITION_Y3, POSITION_Y4, POSITION_Y5,
@@ -92,21 +92,7 @@ public class DraggableMaker {
             }
         }
 
-        if (id == 41) {
-            System.out.println("Esto es un portaAvion");
-            addValidPos(id);
-        } else if (id == 31 || id == 32) {
-            System.out.println("Esto es el submarino " + id);
-            addValidPos(id);
-        } else if (id == 21 || id == 22 || id == 23) {
-            System.out.println("Esto es el destructor " + id);
-            addValidPos(id);
-        } else if (id == 11 || id == 12 || id == 13 || id == 14) {
-            System.out.println("Esta es la fragata " + id);
-            addValidPos(id);
-        }
-        // Agregar el id a la lista de posiciones válidas
-
+        // Ajustar posición X
         double currentX = node.getLayoutX();
         double[] positionsX = {
                 POSITION_X1, POSITION_X2, POSITION_X3, POSITION_X4, POSITION_X5,
@@ -126,22 +112,22 @@ public class DraggableMaker {
         node.setLayoutY(closestY);
         node.setLayoutX(closestX);
 
+        // Output for debugging
         System.out.println("-- closestX: " + closestX);
         System.out.println("-- closestY: " + closestY);
         System.out.println("ACA HAY UN BARCO");
 
-        System.out.println("Lista de posiciones válidas: " + validPos);
-
+        // Print the final position
         String ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
-        ultimasPosiciones.put(id,ultimaPosicion);
-        agregarPosiciones(id,closestX,closestY);
-        // Imprime la última posición del barco
+        ultimasPosiciones.put(id, ultimaPosicion);
+        agregarPosiciones(id, closestX, closestY, shapeCreator);
+        addValidPos(id);
         System.out.println("Última posición de Barco : " + ultimaPosicion);
         System.out.println("Posición de cuadrícula calculada: " + convertToGridPosition(closestX, closestY));
-
-
+        turns=shapeCreator.getTurns();
+        System.out.println("Los giros son: "+turns);
     }
-    //Posicion a posicion tipo gridv 32*32
+
     private String convertToGridPosition(double x, double y) {
         int column = (int) ((x - POSITION_X1) / 32) + 1;
         int row = (int) ((y - POSITION_Y1) / 32) + 1;
@@ -157,7 +143,7 @@ public class DraggableMaker {
         }
     }
 
-    public void agregarPosiciones(int id, double closestX, double closestY) {
+    public void agregarPosiciones(int id, double closestX, double closestY, ShapeCreator shapeCreator) {
         String ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
         ultimasPosiciones.put(id, ultimaPosicion);
 
@@ -166,20 +152,39 @@ public class DraggableMaker {
 
         // Si el primer dígito es 2, 3 o 4, añadir posiciones adicionales
         if (primerDigito >= 2 && primerDigito <= 4) {
-            for (int i = 1; i < primerDigito; i++) {
-                closestY += 32;
-                ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
-                ultimasPosiciones.put(id * 10 + (i + 1), ultimaPosicion);
+            if(shapeCreator.getTurns() == 1) {
+                for (int i = 1; i < primerDigito; i++) {
+                    closestY += 32;
+                    ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
+                    ultimasPosiciones.put(id * 10 + (i + 1), ultimaPosicion);
+                }
+            } else if(shapeCreator.getTurns() == 2) {
+                // Ajustar posición X
+                //closestX += 32 * (primerDigito - 1);
+                for (int i = 1; i < primerDigito; i++) {
+                    closestX += 32; // Añadir un desplazamiento constante para cada barco subsiguiente
+                    ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
+                    ultimasPosiciones.put(id * 10 + (i + 1), ultimaPosicion);
+                }
             }
         }
     }
     public List<Integer> getValidPos () {
             return validPos;
         }
+
     public void addValidPos ( int id){
         if (!validPos.contains(id)) {
             validPos.add(id);
         }
+    }
+
+    public int getTurns() {
+        return turns;
+    }
+
+    public void setTurns(int turns) {
+        this.turns = turns;
     }
 
     public double getClosestX () {
