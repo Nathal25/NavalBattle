@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -50,6 +51,7 @@ public class StartController extends Stage {
     private FragatasCreator fragata1,fragata2,fragata3,fragata4;
 
     public void initialize(){
+        Image bombImage = new Image(getClass().getResource("/com/example/navalbattle/images/Tocado.png").toExternalForm());
         draggableMaker = new DraggableMaker();
         portaAvion = new PortaAvionesCreator();
         setFigureLayout(portaAvion, 450, 85);
