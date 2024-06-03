@@ -74,7 +74,7 @@ public class ShipsPositions {
         thirdBoard.add("J6");
         thirdBoard.add("J7");
 
-        int enemyBoard=(int)(Math.random()*3);
+        int enemyBoard=(int)(Math.random()*3);//0,1,2
         if(enemyBoard == 0){
             shipsPositions=firstBoard;
         }

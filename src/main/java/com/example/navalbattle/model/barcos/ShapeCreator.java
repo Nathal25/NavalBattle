@@ -80,37 +80,38 @@ public class ShapeCreator implements IShapeCreator {
                     } else if (turns == 2) {
                         shape.getPoints().setAll(0.0, 32.0, 16.0, 0.0, 32.0, 32.0, 16.0, 32.0, 32.0, 64.0, 16.0, 64.0, 32.0, 96.0, 16.0, 96.0, 32.0, 128.0, 0.0, 128.0, 16.0, 96.0, 0.0, 96.0, 16.0, 64.0, 0.0, 64.0, 16.0, 32.0, 0.0, 32.0);
                     }
-            }
-            else if(idStr.charAt(0) == '3') {
-                if (turns == 1) {
-                    shape.getPoints().setAll(0.0,16.0,32.0,0.0,32.0,16.0,64.0,0.0,64.0,16.0,96.0,0.0,96.0,32.0,64.0,16.0,64.0,32.0,32.0,16.0,32.0,32.0);
-                } else if (turns == 2) {
-                    shape.getPoints().setAll(0.0, 32.0, 16.0, 0.0, 32.0, 32.0, 16.0, 32.0, 32.0, 64.0, 16.0, 64.0, 32.0, 96.0, 0.0, 96.0,
-                            16.0, 64.0, 0.0, 64.0, 16.0, 32.0, 0.0, 32.0);
                 }
-            }
-            else if(idStr.charAt(0) == '2') {
-                if (turns == 1) {
-                    shape.getPoints().setAll(0.0,16.0,32.0,0.0,32.0,16.0,64.0,0.0,64.0,32.0,32.0,16.0,32.0,32.0);
-                }else if(turns == 2){
-                    shape.getPoints().setAll(0.0, 32.0,16.0, 0.0, 32.0, 32.0, 16.0, 32.0, 32.0, 64.0, 0.0, 64.0, 16.0, 32.0, 0.0, 32.0);
+                else if(idStr.charAt(0) == '3') {
+                    if (turns == 1) {
+                        shape.getPoints().setAll(0.0,16.0,32.0,0.0,32.0,16.0,64.0,0.0,64.0,16.0,96.0,0.0,96.0,32.0,64.0,16.0,64.0,32.0,32.0,16.0,32.0,32.0);
+                    } else if (turns == 2) {
+                        shape.getPoints().setAll(0.0, 32.0, 16.0, 0.0, 32.0, 32.0, 16.0, 32.0, 32.0, 64.0, 16.0, 64.0, 32.0, 96.0, 0.0, 96.0,
+                                16.0, 64.0, 0.0, 64.0, 16.0, 32.0, 0.0, 32.0);
+                    }
                 }
-            }
-            else if(idStr.charAt(0) == '1') {
-                if (turns == 1) {
-                    shape.getPoints().setAll(0.0,16.0,32.0,0.0,32.0,32.0);
-                } else if (turns == 2) {
-                    shape.getPoints().setAll(0.0, 32.0,16.0, 0.0, 32.0, 32.0);
+                else if(idStr.charAt(0) == '2') {
+                    if (turns == 1) {
+                        shape.getPoints().setAll(0.0,16.0,32.0,0.0,32.0,16.0,64.0,0.0,64.0,32.0,32.0,16.0,32.0,32.0);
+                    }else if(turns == 2){
+                        shape.getPoints().setAll(0.0, 32.0,16.0, 0.0, 32.0, 32.0, 16.0, 32.0, 32.0, 64.0, 0.0, 64.0, 16.0, 32.0, 0.0, 32.0);
+                    }
                 }
+                else if(idStr.charAt(0) == '1') {
+                    if (turns == 1) {
+                        shape.getPoints().setAll(0.0,16.0,32.0,0.0,32.0,32.0);
+                    } else if (turns == 2) {
+                        shape.getPoints().setAll(0.0, 32.0,16.0, 0.0, 32.0, 32.0);
+                    }
                 }
-            turns++;
-            if (turns>2){
-                setTurns();
-            }
-            System.out.println("La cantidad de giros son "+turns);
-            setLayoutX(shape.getLayoutX()); // Actualizar layoutXsetLayoutY(shape.getLayoutY()); // Actualizar layoutY
+                turns++;
+                if (turns>2){
+                    setTurns();
+                }
+                System.out.println("La cantidad de giros son "+turns);
+                setLayoutX(shape.getLayoutX()); // Actualizar layoutXsetLayoutY(shape.getLayoutY()); // Actualizar layoutY
             }
             System.out.println("Shape rotated");
         }
     }
 }
+
