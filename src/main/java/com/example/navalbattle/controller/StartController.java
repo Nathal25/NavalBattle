@@ -280,7 +280,6 @@ public class StartController extends Stage {
                             if (shipsPositions.getShipsPositions().contains(stackPane.getId())) {
                                 System.out.println("Acá hay un barco");
                                 Touched.addTocado(stackPane);
-                                obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
                             } else {
                                 System.out.println("Hay agua");
                                 Water.addAgua(stackPane);
@@ -288,8 +287,9 @@ public class StartController extends Stage {
                                     Water.addAgua(stackPane);
                                     System.out.println("Ganastes(Usuario)");
                                 }
-                                obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
+
                             }
+                            obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
                         });
 
                     }
@@ -307,7 +307,9 @@ public class StartController extends Stage {
     public void obtainPositions(Map<Integer, Double> ultimasPosicionesX, Map<Integer, Double> ultimasPosicionesY) {
         Bomb bomb=new Bomb();
         SafeShot safeShot=new SafeShot();
-        Set<String> selectedPositions = new HashSet<>();
+        Map<Integer, Double> posXColector = new HashMap<>();
+        Map<Integer,Double> posYColector=new HashMap<>();
+
         if (ultimasPosicionesX == null || ultimasPosicionesY == null) {
             throw new IllegalArgumentException("Maps cannot be null");
         }
@@ -327,55 +329,48 @@ public class StartController extends Stage {
         for (double i = startY; i <= endY; i += increment) {
             validPosY.add(i);
         }
+        int randomPosX = (int) (Math.random() * validPosX.size());
+        double randomValueOnPosX = validPosX.get(randomPosX);
 
-        // Obtener valores aleatorios de X y Y que no se hayan seleccionado antes
-        double randomValueOnPosX;
-        double randomValueOnPosY;
-        String combination;
-        do {
-            int randomPosXIndex = (int) (Math.random() * validPosX.size());
-            randomValueOnPosX = validPosX.get(randomPosXIndex);
+        int randomPosY = (int) (Math.random() * validPosY.size());
+        double randomValueOnPosY = validPosY.get(randomPosY);
 
-            int randomPosYIndex = (int) (Math.random() * validPosY.size());
-            randomValueOnPosY = validPosY.get(randomPosYIndex);
-
-            combination = randomValueOnPosX + "-" + randomValueOnPosY;
-        } while (selectedPositions.contains(combination));
-
-        selectedPositions.add(combination);
-
-        // Verificar si alguno de los IDs en ultimasPosicionesX contiene el valor de randomValueOnPosX
-        boolean found = false;
+        //verifyCoords(randomValueOnPosX,randomValueOnPosY,posXColector,posYColector,validPosX,validPosY);
         for (Map.Entry<Integer, Double> entry : ultimasPosicionesX.entrySet()) {
             if (entry.getValue().equals(randomValueOnPosX)) {
                 int randomId = entry.getKey();
-                if (ultimasPosicionesY.containsKey(randomId)) {
-                    double posX = entry.getValue();
-                    double posY = ultimasPosicionesY.get(randomId);
-                    System.out.println("Se encontró el valor " + randomValueOnPosX + " en la posición X para el ID " + randomId + ":");
-                    System.out.println("El valor en x es " + posX);
-                    System.out.println("El valor en y es " + posY);
+//                    double posX = entry.getValue();
+//                    double posY = ultimasPosicionesY.get(randomId);
+//                    System.out.println("Se encontró el valor " + randomValueOnPosX + " en la posición X para el ID " + randomId + ":");
+//                    System.out.println("El valor en x es " + posX);
+//                    System.out.println("El valor en y es " + posY);
 
-                    if (ultimasPosicionesY.get(randomId).equals(randomValueOnPosY)) {
-                        System.out.println("Se encontró el valor " + randomValueOnPosY + " en la posición Y para el ID " + randomId);
-                        bomb.setPosImgX(randomValueOnPosX-32);
-                        bomb.setPosImgY(randomValueOnPosY-64);
-                        gameBoard.getChildren().add(bomb.getImageView());
-                    } else {
-                        System.out.println("No se encontró el valor " + randomValueOnPosY + " en la posición Y para el ID " + randomId+" y con la posicion X "+randomValueOnPosX);
-                        safeShot.setPosImgX(randomValueOnPosX-32);
-                        safeShot.setPosImgY(randomValueOnPosY-64);
-                        gameBoard.getChildren().add(safeShot.getImageView());
-
-                    }
-                    found = true;
-                    break;
+                if (ultimasPosicionesY.get(randomId).equals(randomValueOnPosY)) {
+                    System.out.println("Se encontró el valor " + randomValueOnPosY + " en la posición Y para el ID " + randomId);
+                    bomb.setPosImgX(randomValueOnPosX - 32);
+                    bomb.setPosImgY(randomValueOnPosY - 64);
+                    gameBoard.getChildren().add(bomb.getImageView());
                 }
             }
         }
-        if (!found) {
-            //System.out.println("No se encontró el valor " + randomValueOnPosX + " en ningún ID en ultimasPosicionesX");
-        }
     }
 
+    public boolean verifyCoords(double randomX,double randomY, Map<Integer, Double> posXColector, Map<Integer, Double> posYColector, List<Double> validPosX,  List<Double> validPosY) {
+        boolean contais = true;
+        for(Map.Entry<Integer, Double> entry : posXColector.entrySet()){
+            if(entry.getValue().equals(randomX)){
+                if(validPosY.get(entry.getKey()).equals(randomY)){
+                    randomX =(int) (Math.random() * 10);
+                    randomY =(int) (Math.random() * 10);
+                    double randomValueOnPosX=validPosX.get((int) randomX);
+                    double randomValueOnPosY=validPosY.get((int) randomY);
+                    contais=true;
+                }
+            }
+            else {
+                contais=false;
+            }
+        }
+        return contais;
+    }
 }
