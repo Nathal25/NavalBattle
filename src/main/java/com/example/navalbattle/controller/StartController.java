@@ -45,54 +45,54 @@ public class StartController extends Stage {
 
     private ShipsPositions shipsPositions;
     private DraggableMaker draggableMaker;
-    private SubmarinosCreator submarino1,submarino2;
-    private DestructoresCreator destructores1,destructores2,destructores3;
+    private SubmarinosCreator submarino1, submarino2;
+    private DestructoresCreator destructores1, destructores2, destructores3;
     private PortaAvionesCreator portaAvion;
-    private FragatasCreator fragata1,fragata2,fragata3,fragata4;
+    private FragatasCreator fragata1, fragata2, fragata3, fragata4;
 
-    public void initialize(){
+    public void initialize() {
         Image bombImage = new Image(getClass().getResource("/com/example/navalbattle/images/Tocado.png").toExternalForm());
         draggableMaker = new DraggableMaker();
         portaAvion = new PortaAvionesCreator();
         setFigureLayout(portaAvion, 450, 85);
-        setFigureId(portaAvion,41);
+        setFigureId(portaAvion, 41);
 
         submarino1 = new SubmarinosCreator();
         setFigureLayout(submarino1, 500, 117);
-        setFigureId(submarino1,31);
+        setFigureId(submarino1, 31);
 
         submarino2 = new SubmarinosCreator();
         setFigureLayout(submarino2, 550, 117);
-        setFigureId(submarino2,32);
+        setFigureId(submarino2, 32);
 
-        destructores1=new DestructoresCreator();
-        setFigureLayout(destructores1,450,245);
-        setFigureId(destructores1,21);
+        destructores1 = new DestructoresCreator();
+        setFigureLayout(destructores1, 450, 245);
+        setFigureId(destructores1, 21);
 
-        destructores2=new DestructoresCreator();
-        setFigureLayout(destructores2,500,245);
-        setFigureId(destructores2,22);
+        destructores2 = new DestructoresCreator();
+        setFigureLayout(destructores2, 500, 245);
+        setFigureId(destructores2, 22);
 
-        destructores3=new DestructoresCreator();
-        setFigureLayout(destructores3,550,245);
-        setFigureId(destructores3,23);
+        destructores3 = new DestructoresCreator();
+        setFigureLayout(destructores3, 550, 245);
+        setFigureId(destructores3, 23);
 
 
         fragata1 = new FragatasCreator();
-        setFigureLayout(fragata1,600,85);
-        setFigureId(fragata1,11);
+        setFigureLayout(fragata1, 600, 85);
+        setFigureId(fragata1, 11);
 
         fragata2 = new FragatasCreator();
-        setFigureLayout(fragata2,600,149);
-        setFigureId(fragata2,12);
+        setFigureLayout(fragata2, 600, 149);
+        setFigureId(fragata2, 12);
 
         fragata3 = new FragatasCreator();
-        setFigureLayout(fragata3,600,213);
-        setFigureId(fragata3,13);
+        setFigureLayout(fragata3, 600, 213);
+        setFigureId(fragata3, 13);
 
         fragata4 = new FragatasCreator();
-        setFigureLayout(fragata4,600,277);
-        setFigureId(fragata4,14);
+        setFigureLayout(fragata4, 600, 277);
+        setFigureId(fragata4, 14);
 
 
         int gridSize = 11; // Tamaño de la cuadrícula
@@ -100,7 +100,7 @@ public class StartController extends Stage {
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                String id=(String.valueOf((char) ('A' + j - 1))).concat(String.valueOf(i));
+                String id = (String.valueOf((char) ('A' + j - 1))).concat(String.valueOf(i));
                 // Crear un StackPane
                 StackPane stackPane = new StackPane();
                 stackPane.setId(id);
@@ -127,7 +127,7 @@ public class StartController extends Stage {
                     // Primera fila (letras de la A a la J)
                     Label label = new Label(String.valueOf((char) ('A' + j - 1)));
                     label.setStyle("-fx-text-fill: #f6925c;" +
-                            "-fx-font-weight: bold;"+
+                            "-fx-font-weight: bold;" +
                             "-fx-font-size: 15;");
                     stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
                             "-fx-border-color: rgb(25,43,119);" +
@@ -138,7 +138,7 @@ public class StartController extends Stage {
                     // Primera columna (números del 1 al 10)
                     Label label = new Label(String.valueOf(i));
                     label.setStyle("-fx-text-fill: #ff762c;" +
-                            "-fx-font-weight: bold;"+
+                            "-fx-font-weight: bold;" +
                             "-fx-font-size: 15;");
                     stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
                             "-fx-border-color: rgb(25,43,119);" +
@@ -169,37 +169,38 @@ public class StartController extends Stage {
         }
 
 
-        basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(),fragata3.getShape(),fragata4.getShape(), submarino1.getShape(),submarino2.getShape(),destructores1.getShape(),destructores2.getShape(), destructores3.getShape());
+        basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(), fragata3.getShape(), fragata4.getShape(), submarino1.getShape(), submarino2.getShape(), destructores1.getShape(), destructores2.getShape(), destructores3.getShape());
 
-        draggableMaker.makeDraggable(portaAvion.getShape(),portaAvion);
+        draggableMaker.makeDraggable(portaAvion.getShape(), portaAvion);
         draggableMaker.makeDraggable(fragata1.getShape(), fragata1);
         draggableMaker.makeDraggable(fragata2.getShape(), fragata2);
         draggableMaker.makeDraggable(fragata3.getShape(), fragata3);
         draggableMaker.makeDraggable(fragata4.getShape(), fragata4);
-        draggableMaker.makeDraggable(submarino1.getShape(),submarino1);
-        draggableMaker.makeDraggable(submarino2.getShape(),submarino2);
-        draggableMaker.makeDraggable(destructores1.getShape(),destructores1);
-        draggableMaker.makeDraggable(destructores2.getShape(),destructores2);
-        draggableMaker.makeDraggable(destructores3.getShape(),destructores3);
+        draggableMaker.makeDraggable(submarino1.getShape(), submarino1);
+        draggableMaker.makeDraggable(submarino2.getShape(), submarino2);
+        draggableMaker.makeDraggable(destructores1.getShape(), destructores1);
+        draggableMaker.makeDraggable(destructores2.getShape(), destructores2);
+        draggableMaker.makeDraggable(destructores3.getShape(), destructores3);
     }
+
     private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
         figure.setLayoutX(layoutX);
         figure.setLayoutY(layoutY);
     }
+
     private void setFigureId(IShapeCreator figure, int id) {
         figure.setId(id);
     }
 
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
-        int listSize=draggableMaker.getValidPos().size();
-        System.out.println("El tamaño de la lista es: "+draggableMaker.getValidPos().size());
+        int listSize = draggableMaker.getValidPos().size();
+        System.out.println("El tamaño de la lista es: " + draggableMaker.getValidPos().size());
 
-        if(listSize!=10){
+        if (listSize != 10) {
             System.out.println("Aun faltan barcos por colocar");
-            System.out.println("..."+draggableMaker.getValidPos());
-        }
-        else {
+            System.out.println("..." + draggableMaker.getValidPos());
+        } else {
 
             //Bloqueo para que no se mueva las figuras
             draggableMaker.disableMouseEvents(portaAvion.getShape());
@@ -213,17 +214,17 @@ public class StartController extends Stage {
             draggableMaker.disableMouseEvents(destructores2.getShape());
             draggableMaker.disableMouseEvents(destructores3.getShape());
 
-            shipsPositions=new ShipsPositions();
+            shipsPositions = new ShipsPositions();
             basicGrid.setPrefWidth(855);
             Scene scene = basicGrid.getScene();
             if (scene != null) {
                 scene.getWindow().setWidth(855);
 
             }
-            GridPane boardMachine=new GridPane();
+            GridPane boardMachine = new GridPane();
             for (int i = 0; i < 11; i++) {
                 for (int j = 0; j < 11; j++) {
-                    String id=(String.valueOf((char) ('A' + j - 1))).concat(String.valueOf(i));
+                    String id = (String.valueOf((char) ('A' + j - 1))).concat(String.valueOf(i));
                     // Crear un StackPane
                     StackPane stackPane = new StackPane();
                     stackPane.setId(id);
@@ -241,7 +242,7 @@ public class StartController extends Stage {
                         // Primera columna (letras de la A a la J)
                         Label label = new Label(String.valueOf(i));
                         label.setStyle("-fx-text-fill: #f6925c;" +
-                                "-fx-font-weight: bold;"+
+                                "-fx-font-weight: bold;" +
                                 "-fx-font-size: 15;");
                         stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
                                 "-fx-border-color: rgb(25,43,119);" +
@@ -253,7 +254,7 @@ public class StartController extends Stage {
 
                         Label label = new Label(String.valueOf((char) ('A' + j - 1)));
                         label.setStyle("-fx-text-fill: #ff762c;" +
-                                "-fx-font-weight: bold;"+
+                                "-fx-font-weight: bold;" +
                                 "-fx-font-size: 15;");
                         stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
                                 "-fx-border-color: rgb(25,43,119);" +
@@ -289,7 +290,7 @@ public class StartController extends Stage {
                                     System.out.println("Ganastes(Usuario)");
                                 }
                             }
-                            obtainPositions(draggableMaker.getUltimasPosicionesX(),draggableMaker.getUltimasPosicionesY());
+                            obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
                         });
 
                     }
@@ -300,10 +301,9 @@ public class StartController extends Stage {
             boardMachine.setLayoutY(53);
             basicPane.getChildren().add(boardMachine);
             btnStart.setVisible(false);
-            obtainPositions(draggableMaker.getUltimasPosicionesX(),draggableMaker.getUltimasPosicionesY());
+            obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
         }
     }
-
     public void obtainPositions(List<Double> posX, List<Double> posY) {
         List<Double> validPosX = new ArrayList<>();
         double startX = 69.0;
@@ -327,26 +327,31 @@ public class StartController extends Stage {
         System.out.println("Pos guardads en X: " + posX);
         System.out.println("Pos guardads en Y: " + posY);
 
-        if (!validPosX.isEmpty() && !validPosY.isEmpty()) {
+        if (!validPosX.isEmpty() && !validPosY.isEmpty()) { //valida ¿?
             int randomX = (int) (Math.random() * validPosX.size());
             int randomY = (int) (Math.random() * validPosY.size());
-            double posRandomX = validPosX.get(randomX);
+            double posRandomX = validPosX.get(randomX); //posiciones
             double posRandomY = validPosY.get(randomY);
+
+            //Posición aleatoria :v
 
             if (posX.contains(posRandomX) && posY.contains(posRandomY)) {
                 System.out.println("En la posicion " + posRandomX + "," + posRandomY + " hay un barco");
                 Bomb bomb = new Bomb();
-                bomb.setPosImgX(randomX);
-                bomb.setPosImgY(randomY);
+                bomb.setPosImgX(posRandomX-32); //Cambio
+                bomb.setPosImgY(posRandomY-32); //Cambio
                 gameBoard.getChildren().add(bomb.getImageView());
             } else {
                 System.out.println("En la posicion " + posRandomX + "," + posRandomY + " no hay un barco");
             }
+            //no sirve
+            //validPosX.remove(randomX);
+            //validPosY.remove(randomY);
 
-            validPosX.remove(randomX);
-            validPosY.remove(randomY);
         } else {
             System.out.println("No quedan posiciones válidas para verificar.");
         }
+
+
     }
 }
