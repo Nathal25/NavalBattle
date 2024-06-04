@@ -35,9 +35,9 @@ public class DraggableMaker {
     private double closestX;
     private double closestY;
     private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
-    private int turns=1;
+    private int turns = 1;
     private List<Integer> validPos = new ArrayList<>();
-    //se utilizo map porquee facilita guardar la ultima posicion del barco puesta por el usuario
+    //se utilizo map porque facilita guardar la ultima posicion del barco puesta por el usuario
     private Map<Integer, Double> ultimasPosicionesX = new HashMap<>();
     private Map<Integer, Double> ultimasPosicionesY = new HashMap<>();
 
@@ -64,7 +64,7 @@ public class DraggableMaker {
                 posMouseX = 0;
                 posMouseY = 0;
 
-                adjustToClosestPosition(node,shapeCreator);
+                adjustToClosestPosition(node, shapeCreator);
                 shapeCreator.setLayoutX(node.getLayoutX()); // Actualizar layoutX en ShapeCreator
                 shapeCreator.setLayoutY(node.getLayoutY()); // Actualizar layoutY en ShapeCreator
             });
@@ -123,13 +123,12 @@ public class DraggableMaker {
         ultimasPosicionesX.put(id, ultimaPosicionX);
         ultimasPosicionesY.put(id, ultimaPosicionY);
         agregarPosiciones(id, closestX, closestY, shapeCreator);
-        agregarPosiciones(id, closestX, closestY, shapeCreator);
         addValidPos(id);
         System.out.println("Última posición X del Barco: " + ultimaPosicionX);
-        System.out.println("Ultima posición Y del Barco: "+ultimaPosicionY);
+        System.out.println("Última posición Y del Barco: " + ultimaPosicionY);
         System.out.println("Posición de cuadrícula calculada: " + convertToGridPosition(closestX, closestY));
-        turns=shapeCreator.getTurns();
-        System.out.println("Los giros son: "+turns);
+        turns = shapeCreator.getTurns();
+        System.out.println("Los giros son: " + turns);
     }
 
     private String convertToGridPosition(double x, double y) {
@@ -139,11 +138,11 @@ public class DraggableMaker {
         return "(" + row + ", " + column + ")";
     }
 
-    // Imprime las ultima posicion de cada barco (No deja historial)
+    // Imprime las ultima posición de cada barco (No deja historial)
     public void imprimirPosicionesFinales() {
         System.out.println("Posiciones finales de todos los barcos:");
         for (int id : ultimasPosicionesX.keySet()) {
-            System.out.println("Barco " + id + " en X: (" + ultimasPosicionesX.get(id) +")");
+            System.out.println("Barco " + id + " en X: (" + ultimasPosicionesX.get(id) + ")");
             System.out.println("Barco " + id + " en Y: (" + ultimasPosicionesY.get(id) + ")");
         }
     }
@@ -172,53 +171,27 @@ public class DraggableMaker {
             }
         }
     }
-    public List<Integer> getValidPos () {
+
+    public List<Integer> getValidPos() {
         return validPos;
     }
 
-    public void addValidPos ( int id){
+    public void addValidPos(int id) {
         if (!validPos.contains(id)) {
             validPos.add(id);
         }
-    }
-
-    public int getTurns() {
-        return turns;
-    }
-
-    public void setTurns(int turns) {
-        this.turns = turns;
-    }
-
-    public double getClosestX () {
-        return closestX;
-    }
-
-    public double getClosestY () {
-        return closestY;
-    }
-    public boolean isGameOn () {
-        return gameOn;
-    }
-
-    public void setGameOn ( boolean gameOn){
-        this.gameOn = gameOn;
     }
 
     public void disableMouseEvents(Node node) {
         node.setDisable(true);
         node.setPickOnBounds(false);
     }
-    // Método para obtener todas las posiciones X como una List
-    public List<Double> getUltimasPosicionesX() {
-        return new ArrayList<>(ultimasPosicionesX.values());
+
+    public Map<Integer, Double> getUltimasPosicionesX() {
+        return ultimasPosicionesX;
     }
 
-    // Método para obtener todas las posiciones Y como una List
-    public List<Double> getUltimasPosicionesY() {
-        return new ArrayList<>(ultimasPosicionesY.values());
+    public Map<Integer, Double> getUltimasPosicionesY() {
+        return ultimasPosicionesY;
     }
 }
-/*
-
- */
