@@ -230,6 +230,7 @@ public class StartController extends Stage {
                     stackPane.setId(id);
                     stackPane.setPrefWidth(32);
                     stackPane.setPrefHeight(32);
+                    stackPane.setViewOrder(1);
                     stackPane.setStyle("-fx-background-color: rgb(177,194,255);" +
                             "-fx-border-color: rgba(0,0,0,0.7);" +
                             "-fx-stroke-type: inside;");
@@ -350,6 +351,7 @@ public class StartController extends Stage {
 
             if (!combinacionesAnalizadas.contains(posToGuess)) {
                 combinacionesAnalizadas.add(posToGuess);
+
                 boolean bombPlaced = false; // Indicador para saber si se colocó una bomba
 
                 for (Map.Entry<Integer, Double> entry : ultimasPosicionesX.entrySet()) {
@@ -358,15 +360,22 @@ public class StartController extends Stage {
                         if (ultimasPosicionesY.get(randomId).equals(randomValueOnPosY)) {
                             System.out.println("Se encontró un barco en las posiciones " + randomValueOnPosX + "," + randomValueOnPosY);
                             bomb.setPosImgX(randomValueOnPosX - 32);
-                            bomb.setPosImgY(randomValueOnPosY - 43);
+                            bomb.setPosImgY(randomValueOnPosY - 59);
                             setBombs.getChildren().add(bomb.getImageView());
                             bombPlaced = true; // Se colocó una bomba
                             break;
                         }
                     }
                 }
-                if (!bombPlaced) {
-                    System.out.println("No se encontró una combinación válida para la bomba. Intenta nuevamente.");
+
+                if (bombPlaced) {
+                    break; // Salir del bucle si se colocó una bomba
+                }else {
+                    safeShot.setPosImgX(randomValueOnPosX-37);
+                    safeShot.setPosImgY(randomValueOnPosY-53);
+                    setBombs.getChildren().add(safeShot.getImageView());
+                    System.out.println("No se encontraron posiciones "+randomValueOnPosX + "," + randomValueOnPosY);
+                    break;
                 }
             }
         }

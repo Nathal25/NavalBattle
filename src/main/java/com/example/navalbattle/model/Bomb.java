@@ -11,7 +11,7 @@ public class Bomb {
         imageBomb = new ImageView(new Image(String.valueOf(getClass().getResource("/com/example/navalbattle/images/Tocado.png"))));
         imageBomb.setFitHeight(32);
         imageBomb.setFitWidth(32);
-//        imageBomb.setViewOrder(500);
+        imageBomb.setViewOrder(3);
         // No configurar LayoutX y LayoutY aquí, ya que se configurarán después.
     }
 
