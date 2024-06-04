@@ -27,6 +27,8 @@ import java.util.*;
 public class StartController extends Stage {
     @FXML
     private Pane basicPane;
+    @FXML
+    private Pane setBombs;
 
     @FXML
     private Button btnStart;
@@ -289,7 +291,15 @@ public class StartController extends Stage {
                                 }
 
                             }
-                            obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
+                            try {
+                                obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
+                            } catch (NullPointerException e) {
+                                System.out.println("NullPointerException: " + e.getMessage());
+                                // Realiza alguna acción específica para manejar esta excepción
+                            } catch (Exception e) {
+                                System.out.println("Exception: " + e);
+                                // Realiza alguna acción genérica para manejar otras excepciones
+                            }
                         });
 
                     }
@@ -300,18 +310,17 @@ public class StartController extends Stage {
             boardMachine.setLayoutY(53);
             basicPane.getChildren().add(boardMachine);
             btnStart.setVisible(false);
-            obtainPositions(draggableMaker.getUltimasPosicionesX(),draggableMaker.getUltimasPosicionesY());
+            //obtainPositions(draggableMaker.getUltimasPosicionesX(),draggableMaker.getUltimasPosicionesY());
         }
     }
 
     public void obtainPositions(Map<Integer, Double> ultimasPosicionesX, Map<Integer, Double> ultimasPosicionesY) {
-        Bomb bomb=new Bomb();
-        SafeShot safeShot=new SafeShot();
-        Map<Integer, Double> posXColector = new HashMap<>();
-        Map<Integer,Double> posYColector=new HashMap<>();
+        Bomb bomb = new Bomb();
+        SafeShot safeShot = new SafeShot();
+        Set<String> combinacionesAnalizadas = new HashSet<>(); // Registro de combinaciones analizadas
 
         if (ultimasPosicionesX == null || ultimasPosicionesY == null) {
-            throw new IllegalArgumentException("Maps cannot be null");
+            throw new IllegalArgumentException("Los mapas no pueden ser nulos");
         }
 
         // Obtener valores aleatorios en validPosX y validPosY
@@ -329,48 +338,37 @@ public class StartController extends Stage {
         for (double i = startY; i <= endY; i += increment) {
             validPosY.add(i);
         }
-        int randomPosX = (int) (Math.random() * validPosX.size());
-        double randomValueOnPosX = validPosX.get(randomPosX);
 
-        int randomPosY = (int) (Math.random() * validPosY.size());
-        double randomValueOnPosY = validPosY.get(randomPosY);
+        while (true) {
+            int randomPosX = (int) (Math.random() * validPosX.size());
+            double randomValueOnPosX = validPosX.get(randomPosX);
 
-        //verifyCoords(randomValueOnPosX,randomValueOnPosY,posXColector,posYColector,validPosX,validPosY);
-        for (Map.Entry<Integer, Double> entry : ultimasPosicionesX.entrySet()) {
-            if (entry.getValue().equals(randomValueOnPosX)) {
-                int randomId = entry.getKey();
-//                    double posX = entry.getValue();
-//                    double posY = ultimasPosicionesY.get(randomId);
-//                    System.out.println("Se encontró el valor " + randomValueOnPosX + " en la posición X para el ID " + randomId + ":");
-//                    System.out.println("El valor en x es " + posX);
-//                    System.out.println("El valor en y es " + posY);
+            int randomPosY = (int) (Math.random() * validPosY.size());
+            double randomValueOnPosY = validPosY.get(randomPosY);
 
-                if (ultimasPosicionesY.get(randomId).equals(randomValueOnPosY)) {
-                    System.out.println("Se encontró el valor " + randomValueOnPosY + " en la posición Y para el ID " + randomId);
-                    bomb.setPosImgX(randomValueOnPosX - 32);
-                    bomb.setPosImgY(randomValueOnPosY - 64);
-                    gameBoard.getChildren().add(bomb.getImageView());
+            String posToGuess = String.valueOf(randomValueOnPosX).concat(String.valueOf(randomValueOnPosY));
+
+            if (!combinacionesAnalizadas.contains(posToGuess)) {
+                combinacionesAnalizadas.add(posToGuess);
+                boolean bombPlaced = false; // Indicador para saber si se colocó una bomba
+
+                for (Map.Entry<Integer, Double> entry : ultimasPosicionesX.entrySet()) {
+                    if (entry.getValue().equals(randomValueOnPosX)) {
+                        int randomId = entry.getKey();
+                        if (ultimasPosicionesY.get(randomId).equals(randomValueOnPosY)) {
+                            System.out.println("Se encontró un barco en las posiciones " + randomValueOnPosX + "," + randomValueOnPosY);
+                            bomb.setPosImgX(randomValueOnPosX - 32);
+                            bomb.setPosImgY(randomValueOnPosY - 43);
+                            setBombs.getChildren().add(bomb.getImageView());
+                            bombPlaced = true; // Se colocó una bomba
+                            break;
+                        }
+                    }
+                }
+                if (!bombPlaced) {
+                    System.out.println("No se encontró una combinación válida para la bomba. Intenta nuevamente.");
                 }
             }
         }
-    }
-
-    public boolean verifyCoords(double randomX,double randomY, Map<Integer, Double> posXColector, Map<Integer, Double> posYColector, List<Double> validPosX,  List<Double> validPosY) {
-        boolean contais = true;
-        for(Map.Entry<Integer, Double> entry : posXColector.entrySet()){
-            if(entry.getValue().equals(randomX)){
-                if(validPosY.get(entry.getKey()).equals(randomY)){
-                    randomX =(int) (Math.random() * 10);
-                    randomY =(int) (Math.random() * 10);
-                    double randomValueOnPosX=validPosX.get((int) randomX);
-                    double randomValueOnPosY=validPosY.get((int) randomY);
-                    contais=true;
-                }
-            }
-            else {
-                contais=false;
-            }
-        }
-        return contais;
     }
 }
