@@ -12,7 +12,7 @@ public class SafeShot {
         imgWater = new ImageView(new Image(String.valueOf(getClass().getResource("/com/example/navalbattle/images/Agua.png"))));
         imgWater.setFitHeight(32);
         imgWater.setFitWidth(32);
-        // No configurar LayoutX y LayoutY aquí, ya que se configurarán después.
+
     }
 
     public ImageView getImageView(){

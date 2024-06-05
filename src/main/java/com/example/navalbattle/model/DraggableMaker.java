@@ -1,7 +1,11 @@
 package com.example.navalbattle.model;
 
+import com.example.navalbattle.model.Exceptions.InvalidPositionException;
 import com.example.navalbattle.model.barcos.ShapeCreator;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class DraggableMaker {
+
+
     private double posMouseX = 0, posMouseY = 0;
+    private Pane gamePane;
     private int parentWidth = 737;  // Ancho del AnchorPane
     private int parentHeight = 410; // Alto del AnchorPane
     private final double POSITION_X1 = 69;
@@ -36,6 +43,7 @@ public class DraggableMaker {
     private double closestY;
     private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
     private int turns = 1;
+
     private List<Integer> validPos = new ArrayList<>();
     //se utilizo map porque facilita guardar la ultima posicion del barco puesta por el usuario
     private Map<Integer, Double> ultimasPosicionesX = new HashMap<>();
@@ -64,16 +72,21 @@ public class DraggableMaker {
                 posMouseX = 0;
                 posMouseY = 0;
 
+                try {
                 adjustToClosestPosition(node, shapeCreator);
                 shapeCreator.setLayoutX(node.getLayoutX()); // Actualizar layoutX en ShapeCreator
                 shapeCreator.setLayoutY(node.getLayoutY()); // Actualizar layoutY en ShapeCreator
+                } catch (InvalidPositionException e){
+                    System.err.println("Error: " + e.getMessage());
+                }
             });
         } else {
-            System.out.println("Game is not on.");
+            System.out.printf("Game On");
         }
     }
 
-    public void adjustToClosestPosition(Node node, ShapeCreator shapeCreator) {
+
+    public void adjustToClosestPosition(Node node, ShapeCreator shapeCreator) throws InvalidPositionException {
         int id = shapeCreator.getId();
         double currentY = node.getLayoutY();
         double[] positionsY = {
@@ -108,6 +121,7 @@ public class DraggableMaker {
                 minDifferenceX = differenceX;
             }
         }
+
 
         node.setLayoutY(closestY);
         node.setLayoutX(closestX);
@@ -194,4 +208,6 @@ public class DraggableMaker {
     public Map<Integer, Double> getUltimasPosicionesY() {
         return ultimasPosicionesY;
     }
+
+
 }

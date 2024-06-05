@@ -1,11 +1,13 @@
 package com.example.navalbattle.controller;
 
 import com.example.navalbattle.model.*;
+import com.example.navalbattle.model.Exceptions.InvalidCoordinatesException;
 import com.example.navalbattle.model.barcos.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -27,6 +29,8 @@ import java.util.*;
 public class StartController extends Stage {
     @FXML
     private Pane basicPane;
+    @FXML
+    private Pane setBombs;
 
     @FXML
     private Button btnStart;
@@ -49,49 +53,57 @@ public class StartController extends Stage {
     private PortaAvionesCreator portaAvion;
     private FragatasCreator fragata1, fragata2, fragata3, fragata4;
 
+
     public void initialize() {
-        draggableMaker = new DraggableMaker();
-        portaAvion = new PortaAvionesCreator();
-        setFigureLayout(portaAvion, 450, 85);
-        setFigureId(portaAvion, 41);
+        try {
 
-        submarino1 = new SubmarinosCreator();
-        setFigureLayout(submarino1, 500, 117);
-        setFigureId(submarino1, 31);
+            draggableMaker = new DraggableMaker();
 
-        submarino2 = new SubmarinosCreator();
-        setFigureLayout(submarino2, 550, 117);
-        setFigureId(submarino2, 32);
+            portaAvion = new PortaAvionesCreator();
+            setFigureLayout(portaAvion, 450, 85);
+            setFigureId(portaAvion, 41);
 
-        destructores1 = new DestructoresCreator();
-        setFigureLayout(destructores1, 450, 245);
-        setFigureId(destructores1, 21);
+            submarino1 = new SubmarinosCreator();
+            setFigureLayout(submarino1, 500, 117);
+            setFigureId(submarino1, 31);
 
-        destructores2 = new DestructoresCreator();
-        setFigureLayout(destructores2, 500, 245);
-        setFigureId(destructores2, 22);
+            submarino2 = new SubmarinosCreator();
+            setFigureLayout(submarino2, 550, 117);
+            setFigureId(submarino2, 32);
 
-        destructores3 = new DestructoresCreator();
-        setFigureLayout(destructores3, 550, 245);
-        setFigureId(destructores3, 23);
+            destructores1 = new DestructoresCreator();
+            setFigureLayout(destructores1, 450, 245);
+            setFigureId(destructores1, 21);
+
+            destructores2 = new DestructoresCreator();
+            setFigureLayout(destructores2, 500, 245);
+            setFigureId(destructores2, 22);
+
+            destructores3 = new DestructoresCreator();
+            setFigureLayout(destructores3, 550, 245);
+            setFigureId(destructores3, 23);
 
 
-        fragata1 = new FragatasCreator();
-        setFigureLayout(fragata1, 600, 85);
-        setFigureId(fragata1, 11);
+            fragata1 = new FragatasCreator();
+            setFigureLayout(fragata1, 600, 85);
+            setFigureId(fragata1, 11);
 
-        fragata2 = new FragatasCreator();
-        setFigureLayout(fragata2, 600, 149);
-        setFigureId(fragata2, 12);
+            fragata2 = new FragatasCreator();
+            setFigureLayout(fragata2, 600, 149);
+            setFigureId(fragata2, 12);
 
-        fragata3 = new FragatasCreator();
-        setFigureLayout(fragata3, 600, 213);
-        setFigureId(fragata3, 13);
+            fragata3 = new FragatasCreator();
+            setFigureLayout(fragata3, 600, 213);
+            setFigureId(fragata3, 13);
 
-        fragata4 = new FragatasCreator();
-        setFigureLayout(fragata4, 600, 277);
-        setFigureId(fragata4, 14);
+            fragata4 = new FragatasCreator();
+            setFigureLayout(fragata4, 600, 277);
+            setFigureId(fragata4, 14);
 
+        } catch (InvalidCoordinatesException e) {
+            // Manejar la excepción aquí, por ejemplo, imprimir un mensaje de error
+            System.out.println("Error al crear instancia de la figura: " + e.getMessage());
+        }
 
         int gridSize = 11; // Tamaño de la cuadrícula
         int paneSize = 352 / gridSize; // Tamaño de cada pane
@@ -166,19 +178,30 @@ public class StartController extends Stage {
             }
         }
 
+        try {
+            // Intenta agregar las formas al pane y hacerlas arrastrables
+            basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(), fragata3.getShape(), fragata4.getShape(), submarino1.getShape(), submarino2.getShape(), destructores1.getShape(), destructores2.getShape(), destructores3.getShape());
 
-        basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(), fragata3.getShape(), fragata4.getShape(), submarino1.getShape(), submarino2.getShape(), destructores1.getShape(), destructores2.getShape(), destructores3.getShape());
+            draggableMaker.makeDraggable(portaAvion.getShape(), portaAvion);
+            draggableMaker.makeDraggable(fragata1.getShape(), fragata1);
+            draggableMaker.makeDraggable(fragata2.getShape(), fragata2);
+            draggableMaker.makeDraggable(fragata3.getShape(), fragata3);
+            draggableMaker.makeDraggable(fragata4.getShape(), fragata4);
+            draggableMaker.makeDraggable(submarino1.getShape(), submarino1);
+            draggableMaker.makeDraggable(submarino2.getShape(), submarino2);
+            draggableMaker.makeDraggable(destructores1.getShape(), destructores1);
+            draggableMaker.makeDraggable(destructores2.getShape(), destructores2);
+            draggableMaker.makeDraggable(destructores3.getShape(), destructores3);
+        } catch (NullPointerException e) {
+            // Excepción mostrando un mensaje al usuario
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al cargar las formas de los objetos.");
+            alert.setContentText("verifica que los objetos estén correctamente inicializados.");
 
-        draggableMaker.makeDraggable(portaAvion.getShape(), portaAvion);
-        draggableMaker.makeDraggable(fragata1.getShape(), fragata1);
-        draggableMaker.makeDraggable(fragata2.getShape(), fragata2);
-        draggableMaker.makeDraggable(fragata3.getShape(), fragata3);
-        draggableMaker.makeDraggable(fragata4.getShape(), fragata4);
-        draggableMaker.makeDraggable(submarino1.getShape(), submarino1);
-        draggableMaker.makeDraggable(submarino2.getShape(), submarino2);
-        draggableMaker.makeDraggable(destructores1.getShape(), destructores1);
-        draggableMaker.makeDraggable(destructores2.getShape(), destructores2);
-        draggableMaker.makeDraggable(destructores3.getShape(), destructores3);
+            // Mostrar el mensaje de alerta
+            alert.showAndWait();
+        }
     }
 
     private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
@@ -228,6 +251,7 @@ public class StartController extends Stage {
                     stackPane.setId(id);
                     stackPane.setPrefWidth(32);
                     stackPane.setPrefHeight(32);
+                    stackPane.setViewOrder(1);
                     stackPane.setStyle("-fx-background-color: rgb(177,194,255);" +
                             "-fx-border-color: rgba(0,0,0,0.7);" +
                             "-fx-stroke-type: inside;");
@@ -289,7 +313,15 @@ public class StartController extends Stage {
                                 }
 
                             }
-                            obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
+                            try {
+                                obtainPositions(draggableMaker.getUltimasPosicionesX(), draggableMaker.getUltimasPosicionesY());
+                            } catch (NullPointerException e) {
+                                System.out.println("NullPointerException: " + e.getMessage());
+                                // Realiza alguna acción específica para manejar esta excepción
+                            } catch (Exception e) {
+                                System.out.println("Exception: " + e);
+                                // Realiza alguna acción genérica para manejar otras excepciones
+                            }
                         });
 
                     }
@@ -300,18 +332,17 @@ public class StartController extends Stage {
             boardMachine.setLayoutY(53);
             basicPane.getChildren().add(boardMachine);
             btnStart.setVisible(false);
-            obtainPositions(draggableMaker.getUltimasPosicionesX(),draggableMaker.getUltimasPosicionesY());
+            //obtainPositions(draggableMaker.getUltimasPosicionesX(),draggableMaker.getUltimasPosicionesY());
         }
     }
 
     public void obtainPositions(Map<Integer, Double> ultimasPosicionesX, Map<Integer, Double> ultimasPosicionesY) {
-        Bomb bomb=new Bomb();
-        SafeShot safeShot=new SafeShot();
-        Map<Integer, Double> posXColector = new HashMap<>();
-        Map<Integer,Double> posYColector=new HashMap<>();
+        Bomb bomb = new Bomb();
+        SafeShot safeShot = new SafeShot();
+        Set<String> combinacionesAnalizadas = new HashSet<>(); // Registro de combinaciones analizadas
 
         if (ultimasPosicionesX == null || ultimasPosicionesY == null) {
-            throw new IllegalArgumentException("Maps cannot be null");
+            throw new IllegalArgumentException("Los mapas no pueden ser nulos");
         }
 
         // Obtener valores aleatorios en validPosX y validPosY
@@ -329,48 +360,45 @@ public class StartController extends Stage {
         for (double i = startY; i <= endY; i += increment) {
             validPosY.add(i);
         }
-        int randomPosX = (int) (Math.random() * validPosX.size());
-        double randomValueOnPosX = validPosX.get(randomPosX);
 
-        int randomPosY = (int) (Math.random() * validPosY.size());
-        double randomValueOnPosY = validPosY.get(randomPosY);
+        while (true) {
+            int randomPosX = (int) (Math.random() * validPosX.size());
+            double randomValueOnPosX = validPosX.get(randomPosX);
 
-        //verifyCoords(randomValueOnPosX,randomValueOnPosY,posXColector,posYColector,validPosX,validPosY);
-        for (Map.Entry<Integer, Double> entry : ultimasPosicionesX.entrySet()) {
-            if (entry.getValue().equals(randomValueOnPosX)) {
-                int randomId = entry.getKey();
-//                    double posX = entry.getValue();
-//                    double posY = ultimasPosicionesY.get(randomId);
-//                    System.out.println("Se encontró el valor " + randomValueOnPosX + " en la posición X para el ID " + randomId + ":");
-//                    System.out.println("El valor en x es " + posX);
-//                    System.out.println("El valor en y es " + posY);
+            int randomPosY = (int) (Math.random() * validPosY.size());
+            double randomValueOnPosY = validPosY.get(randomPosY);
 
-                if (ultimasPosicionesY.get(randomId).equals(randomValueOnPosY)) {
-                    System.out.println("Se encontró el valor " + randomValueOnPosY + " en la posición Y para el ID " + randomId);
-                    bomb.setPosImgX(randomValueOnPosX - 32);
-                    bomb.setPosImgY(randomValueOnPosY - 64);
-                    gameBoard.getChildren().add(bomb.getImageView());
+            String posToGuess = String.valueOf(randomValueOnPosX).concat(String.valueOf(randomValueOnPosY));
+
+            if (!combinacionesAnalizadas.contains(posToGuess)) {
+                combinacionesAnalizadas.add(posToGuess);
+
+                boolean bombPlaced = false; // Indicador para saber si se colocó una bomba
+
+                for (Map.Entry<Integer, Double> entry : ultimasPosicionesX.entrySet()) {
+                    if (entry.getValue().equals(randomValueOnPosX)) {
+                        int randomId = entry.getKey();
+                        if (ultimasPosicionesY.get(randomId).equals(randomValueOnPosY)) {
+                            System.out.println("Se encontró un barco en las posiciones " + randomValueOnPosX + "," + randomValueOnPosY);
+                            bomb.setPosImgX(randomValueOnPosX - 32);
+                            bomb.setPosImgY(randomValueOnPosY - 59);
+                            setBombs.getChildren().add(bomb.getImageView());
+                            bombPlaced = true; // Se colocó una bomba
+                            break;
+                        }
+                    }
+                }
+
+                if (bombPlaced) {
+                    break; // Salir del bucle si se colocó una bomba
+                }else {
+                    safeShot.setPosImgX(randomValueOnPosX-37);
+                    safeShot.setPosImgY(randomValueOnPosY-53);
+                    setBombs.getChildren().add(safeShot.getImageView());
+                    System.out.println("No se encontraron posiciones "+randomValueOnPosX + "," + randomValueOnPosY);
+                    break;
                 }
             }
         }
-    }
-
-    public boolean verifyCoords(double randomX,double randomY, Map<Integer, Double> posXColector, Map<Integer, Double> posYColector, List<Double> validPosX,  List<Double> validPosY) {
-        boolean contais = true;
-        for(Map.Entry<Integer, Double> entry : posXColector.entrySet()){
-            if(entry.getValue().equals(randomX)){
-                if(validPosY.get(entry.getKey()).equals(randomY)){
-                    randomX =(int) (Math.random() * 10);
-                    randomY =(int) (Math.random() * 10);
-                    double randomValueOnPosX=validPosX.get((int) randomX);
-                    double randomValueOnPosY=validPosY.get((int) randomY);
-                    contais=true;
-                }
-            }
-            else {
-                contais=false;
-            }
-        }
-        return contais;
     }
 }

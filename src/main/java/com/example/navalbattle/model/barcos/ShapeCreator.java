@@ -10,7 +10,7 @@ public class ShapeCreator implements IShapeCreator {
     protected Polygon shape;
     protected double layoutX, layoutY;
     protected int turns = 1;
-    private DraggableMaker draggableMaker=new DraggableMaker();
+
 
     public ShapeCreator(double[] points, Color fillColor, Color strokeColor) {
         shape = new Polygon(points);
