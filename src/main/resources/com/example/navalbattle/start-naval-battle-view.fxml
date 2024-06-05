@@ -38,6 +38,7 @@
                     </cursor>
                 </Button>
                 <Pane fx:id="gameBoard" layoutX="36.0" layoutY="53.0" maxHeight="352.0" maxWidth="352.0" minHeight="352.0" minWidth="352.0" prefHeight="352.0" prefWidth="352.0" style="-fx-background-color: blue;" />
+            <Pane fx:id="setBombs" layoutX="35.0" layoutY="52.0" prefHeight="352.0" prefWidth="352.0" style="-fx-background-color: TRANSPARENT; -fx-border-color: BLACK;" />
             </children></Pane>
     </children>
 </GridPane>
