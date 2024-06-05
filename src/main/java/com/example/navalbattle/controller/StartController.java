@@ -53,7 +53,6 @@ public class StartController extends Stage {
     private PortaAvionesCreator portaAvion;
     private FragatasCreator fragata1, fragata2, fragata3, fragata4;
 
-
     public void initialize() {
         try {
 
@@ -178,30 +177,32 @@ public class StartController extends Stage {
             }
         }
 
-        try {
-            // Intenta agregar las formas al pane y hacerlas arrastrables
-            basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(), fragata3.getShape(), fragata4.getShape(), submarino1.getShape(), submarino2.getShape(), destructores1.getShape(), destructores2.getShape(), destructores3.getShape());
 
-            draggableMaker.makeDraggable(portaAvion.getShape(), portaAvion);
-            draggableMaker.makeDraggable(fragata1.getShape(), fragata1);
-            draggableMaker.makeDraggable(fragata2.getShape(), fragata2);
-            draggableMaker.makeDraggable(fragata3.getShape(), fragata3);
-            draggableMaker.makeDraggable(fragata4.getShape(), fragata4);
-            draggableMaker.makeDraggable(submarino1.getShape(), submarino1);
-            draggableMaker.makeDraggable(submarino2.getShape(), submarino2);
-            draggableMaker.makeDraggable(destructores1.getShape(), destructores1);
-            draggableMaker.makeDraggable(destructores2.getShape(), destructores2);
-            draggableMaker.makeDraggable(destructores3.getShape(), destructores3);
-        } catch (NullPointerException e) {
-            // Excepción mostrando un mensaje al usuario
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al cargar las formas de los objetos.");
-            alert.setContentText("verifica que los objetos estén correctamente inicializados.");
+     try {
+         // Intenta agregar las formas al pane y hacerlas arrastrables
+         basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(), fragata3.getShape(), fragata4.getShape(), submarino1.getShape(), submarino2.getShape(), destructores1.getShape(), destructores2.getShape(), destructores3.getShape());
 
-            // Mostrar el mensaje de alerta
-            alert.showAndWait();
-        }
+         draggableMaker.makeDraggable(portaAvion.getShape(), portaAvion);
+         draggableMaker.makeDraggable(fragata1.getShape(), fragata1);
+         draggableMaker.makeDraggable(fragata2.getShape(), fragata2);
+         draggableMaker.makeDraggable(fragata3.getShape(), fragata3);
+         draggableMaker.makeDraggable(fragata4.getShape(), fragata4);
+         draggableMaker.makeDraggable(submarino1.getShape(), submarino1);
+         draggableMaker.makeDraggable(submarino2.getShape(), submarino2);
+         draggableMaker.makeDraggable(destructores1.getShape(), destructores1);
+         draggableMaker.makeDraggable(destructores2.getShape(), destructores2);
+         draggableMaker.makeDraggable(destructores3.getShape(), destructores3);
+     } catch (NullPointerException e) {
+         // Excepción mostrando un mensaje al usuario
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("Error");
+         alert.setHeaderText("Error al cargar las formas de los objetos.");
+         alert.setContentText("verifica que los objetos estén correctamente inicializados.");
+
+         // Mostrar el mensaje de alerta
+         alert.showAndWait();
+     }
+
     }
 
     private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
