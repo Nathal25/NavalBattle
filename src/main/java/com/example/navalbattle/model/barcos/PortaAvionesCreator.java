@@ -4,6 +4,7 @@ import com.example.navalbattle.model.Exceptions.InvalidCoordinatesException;
 import javafx.scene.paint.Color;
 
 public class PortaAvionesCreator extends ShapeCreator {
+
     public PortaAvionesCreator()  throws InvalidCoordinatesException  {
         super(validatePoints(new double[]{
                 0, 32,

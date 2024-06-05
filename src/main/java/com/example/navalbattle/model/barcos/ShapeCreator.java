@@ -12,6 +12,7 @@ public class ShapeCreator implements IShapeCreator {
     protected int turns = 1;
 
 
+
     public ShapeCreator(double[] points, Color fillColor, Color strokeColor) {
         shape = new Polygon(points);
         shape.setFill(fillColor);

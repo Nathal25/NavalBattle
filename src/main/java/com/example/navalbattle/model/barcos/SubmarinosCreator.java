@@ -12,6 +12,7 @@ public class SubmarinosCreator extends ShapeCreator {
         }), Color.rgb(178, 52, 95), Color.rgb(136, 35, 70));
     }
 
+    
     public static double[] validatePoints(double[] points) throws InvalidCoordinatesException {
         if (points.length % 2 != 0) {
             throw new InvalidCoordinatesException("El número de coordenadas debe ser par.");

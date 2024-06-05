@@ -15,6 +15,7 @@ public class SafeShot {
 
     }
 
+
     public ImageView getImageView(){
         return imgWater;
     }

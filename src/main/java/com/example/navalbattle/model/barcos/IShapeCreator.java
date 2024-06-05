@@ -3,6 +3,7 @@ package com.example.navalbattle.model.barcos;
 import javafx.scene.shape.Polygon;
 
 public interface IShapeCreator {
+
     Polygon getShape();
     void setShape(Polygon shape);
     int getId();

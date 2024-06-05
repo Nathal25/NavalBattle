@@ -18,4 +18,5 @@ public class FragatasCreator extends ShapeCreator {
         }
         return points;
     }
+
 }

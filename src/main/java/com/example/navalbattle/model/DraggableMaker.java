@@ -86,6 +86,7 @@ public class DraggableMaker {
     }
 
 
+
     public void adjustToClosestPosition(Node node, ShapeCreator shapeCreator) throws InvalidPositionException {
         int id = shapeCreator.getId();
         double currentY = node.getLayoutY();

@@ -205,6 +205,7 @@ public class StartController extends Stage {
 
     }
 
+
     private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
         figure.setLayoutX(layoutX);
         figure.setLayoutY(layoutY);

@@ -19,6 +19,7 @@ public class DestructoresCreator extends ShapeCreator {
         }), Color.rgb(228, 140, 255), Color.BLACK);
     }
 
+
     // Método de validación público
     public static double[] validatePoints(double[] points) throws InvalidCoordinatesException {
         if (points.length % 2 != 0) {
