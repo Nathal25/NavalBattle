@@ -1,7 +1,11 @@
 package com.example.navalbattle.model;
 
+import com.example.navalbattle.model.Exceptions.InvalidPositionException;
 import com.example.navalbattle.model.barcos.ShapeCreator;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class DraggableMaker {
+
+
     private double posMouseX = 0, posMouseY = 0;
+    private Pane gamePane;
     private int parentWidth = 737;  // Ancho del AnchorPane
     private int parentHeight = 410; // Alto del AnchorPane
     private final double POSITION_X1 = 69;
@@ -35,13 +42,14 @@ public class DraggableMaker {
     private double closestX;
     private double closestY;
     private boolean gameOn = true;  // Asegúrate de que gameOn esté configurado en true
-    private int id;
-    private List<Integer> validPos = new ArrayList<>();
-    //se utilizo map porquee facilita guardar la ultima posicion del barco puesta por el usuario
-    private Map<Integer, String> ultimasPosiciones = new HashMap<>();
+    private int turns = 1;
 
-    public void makeDraggable(Node node, int id) {
-        this.id = id;
+    private List<Integer> validPos = new ArrayList<>();
+    //se utilizo map porque facilita guardar la ultima posicion del barco puesta por el usuario
+    private Map<Integer, Double> ultimasPosicionesX = new HashMap<>();
+    private Map<Integer, Double> ultimasPosicionesY = new HashMap<>();
+
+    public void makeDraggable(Node node, ShapeCreator shapeCreator) {
         if (gameOn) {
             node.setOnMousePressed(mouseEvent -> {
                 posMouseX = mouseEvent.getSceneX() - node.getLayoutX();
@@ -52,10 +60,8 @@ public class DraggableMaker {
                 double newX = mouseEvent.getSceneX() - posMouseX;
                 double newY = mouseEvent.getSceneY() - posMouseY;
 
-                if (newX >= 0 && newX <= parentWidth - node.getBoundsInParent().getWidth()) {
+                if (shapeCreator.isWithinBounds(newX, newY)){
                     node.setLayoutX(newX);
-                }
-                if (newY >= 0 && newY <= parentHeight - node.getBoundsInParent().getHeight()) {
                     node.setLayoutY(newY);
                 }
             });
@@ -64,17 +70,21 @@ public class DraggableMaker {
                 posMouseX = 0;
                 posMouseY = 0;
 
-                adjustToClosestPosition(node, id);
+                try {
+                adjustToClosestPosition(node, shapeCreator);
+                shapeCreator.setLayoutX(node.getLayoutX()); // Actualizar layoutX en ShapeCreator
+                shapeCreator.setLayoutY(node.getLayoutY()); // Actualizar layoutY en ShapeCreator
+                } catch (InvalidPositionException e){
+                    System.err.println("Error: " + e.getMessage());
+                }
             });
         } else {
-            System.out.println("Game is not on.");
+            System.out.printf("Game On");
         }
     }
 
-
-
-    public void adjustToClosestPosition(Node node, int id) {
-        this.id = id;
+    public void adjustToClosestPosition(Node node, ShapeCreator shapeCreator) throws InvalidPositionException {
+        int id = shapeCreator.getId();
         double currentY = node.getLayoutY();
         double[] positionsY = {
                 POSITION_Y1, POSITION_Y2, POSITION_Y3, POSITION_Y4, POSITION_Y5,
@@ -92,21 +102,7 @@ public class DraggableMaker {
             }
         }
 
-        if (id == 41) {
-            System.out.println("Esto es un portaAvion");
-            addValidPos(id);
-        } else if (id == 31 || id == 32) {
-            System.out.println("Esto es el submarino " + id);
-            addValidPos(id);
-        } else if (id == 21 || id == 22 || id == 23) {
-            System.out.println("Esto es el destructor " + id);
-            addValidPos(id);
-        } else if (id == 11 || id == 12 || id == 13 || id == 14) {
-            System.out.println("Esta es la fragata " + id);
-            addValidPos(id);
-        }
-        // Agregar el id a la lista de posiciones válidas
-
+        // Ajustar posición X
         double currentX = node.getLayoutX();
         double[] positionsX = {
                 POSITION_X1, POSITION_X2, POSITION_X3, POSITION_X4, POSITION_X5,
@@ -123,25 +119,29 @@ public class DraggableMaker {
             }
         }
 
+
         node.setLayoutY(closestY);
         node.setLayoutX(closestX);
 
+        // Output for debugging
         System.out.println("-- closestX: " + closestX);
         System.out.println("-- closestY: " + closestY);
         System.out.println("ACA HAY UN BARCO");
 
-        System.out.println("Lista de posiciones válidas: " + validPos);
-
-        String ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
-        ultimasPosiciones.put(id,ultimaPosicion);
-        agregarPosiciones(id,closestX,closestY);
-        // Imprime la última posición del barco
-        System.out.println("Última posición de Barco : " + ultimaPosicion);
+        // Print the final position
+        double ultimaPosicionX = closestX;
+        double ultimaPosicionY = closestY;
+        ultimasPosicionesX.put(id, ultimaPosicionX);
+        ultimasPosicionesY.put(id, ultimaPosicionY);
+        agregarPosiciones(id, closestX, closestY, shapeCreator);
+        addValidPos(id);
+        System.out.println("Última posición X del Barco: " + ultimaPosicionX);
+        System.out.println("Última posición Y del Barco: " + ultimaPosicionY);
         System.out.println("Posición de cuadrícula calculada: " + convertToGridPosition(closestX, closestY));
-
-
+        turns = shapeCreator.getTurns();
+        System.out.println("Los giros son: " + turns);
     }
-    //Posicion a posicion tipo gridv 32*32
+
     private String convertToGridPosition(double x, double y) {
         int column = (int) ((x - POSITION_X1) / 32) + 1;
         int row = (int) ((y - POSITION_Y1) / 32) + 1;
@@ -149,55 +149,62 @@ public class DraggableMaker {
         return "(" + row + ", " + column + ")";
     }
 
-    //Imprime las ultima posicion de cada barco (No deja historial)
+    // Imprime las ultima posición de cada barco (No deja historial)
     public void imprimirPosicionesFinales() {
         System.out.println("Posiciones finales de todos los barcos:");
-        for (String posicion : ultimasPosiciones.values()) {
-            System.out.println(posicion);
+        for (int id : ultimasPosicionesX.keySet()) {
+            System.out.println("Barco " + id + " en X: (" + ultimasPosicionesX.get(id) + ")");
+            System.out.println("Barco " + id + " en Y: (" + ultimasPosicionesY.get(id) + ")");
         }
     }
 
-    public void agregarPosiciones(int id, double closestX, double closestY) {
-        String ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
-        ultimasPosiciones.put(id, ultimaPosicion);
+    public void agregarPosiciones(int id, double closestX, double closestY, ShapeCreator shapeCreator) {
+        ultimasPosicionesX.put(id, closestX);
+        ultimasPosicionesY.put(id, closestY);
 
         // Obtener el primer dígito del id
         int primerDigito = Integer.parseInt(Integer.toString(id).substring(0, 1));
 
         // Si el primer dígito es 2, 3 o 4, añadir posiciones adicionales
         if (primerDigito >= 2 && primerDigito <= 4) {
-            for (int i = 1; i < primerDigito; i++) {
-                closestY += 32;
-                ultimaPosicion = "Barco " + id + ": (" + closestX + ", " + closestY + ")";
-                ultimasPosiciones.put(id * 10 + (i + 1), ultimaPosicion);
+            if (shapeCreator.getTurns() == 1) {
+                for (int i = 1; i < primerDigito; i++) {
+                    closestY += 32;
+                    ultimasPosicionesX.put(id * 10 + (i + 1), closestX);
+                    ultimasPosicionesY.put(id * 10 + (i + 1), closestY);
+                }
+            } else if (shapeCreator.getTurns() == 2) {
+                for (int i = 1; i < primerDigito; i++) {
+                    closestX += 32; // Añadir un desplazamiento constante para cada barco subsiguiente
+                    ultimasPosicionesX.put(id * 10 + (i + 1), closestX);
+                    ultimasPosicionesY.put(id * 10 + (i + 1), closestY);
+                }
             }
         }
     }
-    public List<Integer> getValidPos () {
-            return validPos;
-        }
-    public void addValidPos ( int id){
+
+    public List<Integer> getValidPos() {
+        return validPos;
+    }
+
+    public void addValidPos(int id) {
         if (!validPos.contains(id)) {
             validPos.add(id);
         }
     }
 
-    public double getClosestX () {
-        return closestX;
+    public void disableMouseEvents(Node node) {
+        node.setDisable(true);
+        node.setPickOnBounds(false);
     }
 
-    public double getClosestY () {
-        return closestY;
-    }
-    public boolean isGameOn () {
-        return gameOn;
+    public Map<Integer, Double> getUltimasPosicionesX() {
+        return ultimasPosicionesX;
     }
 
-    public void setGameOn ( boolean gameOn){
-        this.gameOn = gameOn;
+    public Map<Integer, Double> getUltimasPosicionesY() {
+        return ultimasPosicionesY;
     }
 
-    public Map<Integer, String> getUltimasPosiciones() {
-        return ultimasPosiciones;
-    }
+
 }
