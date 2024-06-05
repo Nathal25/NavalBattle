@@ -60,10 +60,8 @@ public class DraggableMaker {
                 double newX = mouseEvent.getSceneX() - posMouseX;
                 double newY = mouseEvent.getSceneY() - posMouseY;
 
-                if (newX >= 0 && newX <= parentWidth - node.getBoundsInParent().getWidth()) {
+                if (shapeCreator.isWithinBounds(newX, newY)){
                     node.setLayoutX(newX);
-                }
-                if (newY >= 0 && newY <= parentHeight - node.getBoundsInParent().getHeight()) {
                     node.setLayoutY(newY);
                 }
             });
@@ -84,8 +82,6 @@ public class DraggableMaker {
             System.out.printf("Game On");
         }
     }
-
-
 
     public void adjustToClosestPosition(Node node, ShapeCreator shapeCreator) throws InvalidPositionException {
         int id = shapeCreator.getId();

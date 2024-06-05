@@ -14,4 +14,6 @@ public interface IShapeCreator {
     void setLayoutY(double layoutY);
     int getTurns();
     void setTurns();
+    void setHorizontalXBound(double horizontalXBound);
+    boolean isWithinBounds(double newX, double newY);
 }

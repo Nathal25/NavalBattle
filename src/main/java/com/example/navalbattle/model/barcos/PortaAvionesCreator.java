@@ -24,6 +24,7 @@ public class PortaAvionesCreator extends ShapeCreator {
                 16, 32,
                 0, 32
         }), Color.RED, Color.BLACK);
+        setHorizontalXBound(389);
     }
 
     public static double[] validatePoints(double[] points) throws InvalidCoordinatesException {

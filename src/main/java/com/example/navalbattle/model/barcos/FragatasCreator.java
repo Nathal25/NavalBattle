@@ -10,6 +10,7 @@ public class FragatasCreator extends ShapeCreator {
                 16, 0,//B
                 32, 32
         }),Color.rgb(0, 128, 128),Color.rgb(0, 79, 79));
+        setHorizontalXBound(737);
     }
 
     public static double[] validatePoints(double[] points) throws InvalidCoordinatesException {

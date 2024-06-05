@@ -17,6 +17,7 @@ public class DestructoresCreator extends ShapeCreator {
                 16, 32, // D
                 0, 32  // G
         }), Color.rgb(228, 140, 255), Color.BLACK);
+        setHorizontalXBound(389);
     }
 
 
