@@ -1,7 +1,14 @@
 package com.example.navalbattle.model.barcos;
 
 import javafx.scene.shape.Polygon;
-
+/**
+ * The {@code IShapeCreator} interface serves as a template for the creation of the different types of boats.
+ * It declares a handful of standard methods such as setters and getters along with the {@code isWithinBounds()} method
+ * that will be defined later in the {@link ShapeCreator} class.
+ *
+ * @author Nathalia Ortiz
+ * @version 1.0
+**/
 public interface IShapeCreator {
 
     Polygon getShape();
