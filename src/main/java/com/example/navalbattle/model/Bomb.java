@@ -15,7 +15,6 @@ public class Bomb {
         // No configurar LayoutX y LayoutY aquí, ya que se configurarán después.
     }
 
-
     public ImageView getImageView(){
         return imageBomb;
     }
