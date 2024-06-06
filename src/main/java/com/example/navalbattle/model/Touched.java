@@ -33,6 +33,6 @@ public class Touched {
 
     }
     public static boolean maximumCounter() {
-        return counter >= MAX_TOCADO;
+        return counter == MAX_TOCADO;
     }
 }
