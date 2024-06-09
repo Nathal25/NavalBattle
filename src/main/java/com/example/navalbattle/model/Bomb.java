@@ -1,3 +1,6 @@
+/**
+ * Class {@code Bomb}
+ */
 package com.example.navalbattle.model;
 
 import javafx.scene.image.Image;

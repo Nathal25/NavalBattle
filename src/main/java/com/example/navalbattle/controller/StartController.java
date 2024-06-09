@@ -22,7 +22,10 @@ import java.util.*;
 
 /**
  * This class generates the first stage designed to put
- * the ships on the board
+ * the ships on the board.
+ * It initializes the board and allows the user to place the ships on it.
+ * It also handles the start of the game after the ships are placed.
+ *
  * @author Nathalia Ortiz
  */
 
@@ -53,6 +56,9 @@ public class StartController extends Stage {
     private PortaAvionesCreator portaAvion;
     private FragatasCreator fragata1, fragata2, fragata3, fragata4;
 
+    /**
+     * Initializes the controller class.
+     */
     public void initialize() {
         try {
 
@@ -100,17 +106,17 @@ public class StartController extends Stage {
             setFigureId(fragata4, 14);
 
         } catch (InvalidCoordinatesException e) {
-            // Manejar la excepción aquí, por ejemplo, imprimir un mensaje de error
+            // Handles the exception here, for example, printing an error message.
             System.out.println("Error al crear instancia de la figura: " + e.getMessage());
         }
-
-        int gridSize = 11; // Tamaño de la cuadrícula
-        int paneSize = 352 / gridSize; // Tamaño de cada pane
+        // Initialize the game board grid
+        int gridSize = 11; // Size of the grid
+        int paneSize = 352 / gridSize; // Size of each pane
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 String id = (String.valueOf((char) ('A' + j - 1))).concat(String.valueOf(i));
-                // Crear un StackPane
+                // Create a StackPane
                 StackPane stackPane = new StackPane();
                 stackPane.setId(id);
                 stackPane.setPrefWidth(32);
@@ -128,12 +134,12 @@ public class StartController extends Stage {
                 gameBoard.getChildren().add(stackPane);
 
                 if (i == 0 && j == 0) {
-                    // Posición (0,0) nula
+                    // Position (0,0) null
                     stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
                             "-fx-border-color: rgb(25,43,119);" +
                             "-fx-stroke-type: inside;");
                 } else if (i == 0) {
-                    // Primera fila (letras de la A a la J)
+                    // First row (letters from A to J)
                     Label label = new Label(String.valueOf((char) ('A' + j - 1)));
                     label.setStyle("-fx-text-fill: #f6925c;" +
                             "-fx-font-weight: bold;" +
@@ -141,10 +147,10 @@ public class StartController extends Stage {
                     stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
                             "-fx-border-color: rgb(25,43,119);" +
                             "-fx-stroke-type: inside;");
-                    stackPane.setAlignment(Pos.CENTER); // Centrar el contenido vertical y horizontalmente
+                    stackPane.setAlignment(Pos.CENTER); // Center content vertically and horizontally
                     stackPane.getChildren().add(label);
                 } else if (j == 0) {
-                    // Primera columna (números del 1 al 10)
+                    // First column (numbers from 1 to 10)
                     Label label = new Label(String.valueOf(i));
                     label.setStyle("-fx-text-fill: #ff762c;" +
                             "-fx-font-weight: bold;" +
@@ -152,10 +158,10 @@ public class StartController extends Stage {
                     stackPane.setStyle("-fx-background-color: rgb(36,59,204);" +
                             "-fx-border-color: rgb(25,43,119);" +
                             "-fx-stroke-type: inside;");
-                    stackPane.setAlignment(Pos.CENTER); // Centrar el contenido vertical y horizontalmente
+                    stackPane.setAlignment(Pos.CENTER); // Center content vertically and horizontally
                     stackPane.getChildren().add(label);
                 } else {
-                    // Resto de la cuadrícula
+                    // The rest of the grid
                     stackPane.setOnMouseEntered(event -> {
                         stackPane.setStyle("-fx-background-color: rgb(210,210,210);" +
                                 "-fx-border-color: rgba(0,0,0,0.7);" +
@@ -179,7 +185,7 @@ public class StartController extends Stage {
 
 
      try {
-         // Intenta agregar las formas al pane y hacerlas arrastrables
+         // Adds the ships to the pane and make them draggable
          basicPane.getChildren().addAll(portaAvion.getShape(), fragata1.getShape(), fragata2.getShape(), fragata3.getShape(), fragata4.getShape(), submarino1.getShape(), submarino2.getShape(), destructores1.getShape(), destructores2.getShape(), destructores3.getShape());
 
          draggableMaker.makeDraggable(portaAvion.getShape(), portaAvion);
@@ -193,28 +199,43 @@ public class StartController extends Stage {
          draggableMaker.makeDraggable(destructores2.getShape(), destructores2);
          draggableMaker.makeDraggable(destructores3.getShape(), destructores3);
      } catch (NullPointerException e) {
-         // Excepción mostrando un mensaje al usuario
+         // Exception showing a message to the user
          Alert alert = new Alert(Alert.AlertType.ERROR);
          alert.setTitle("Error");
          alert.setHeaderText("Error al cargar las formas de los objetos.");
          alert.setContentText("verifica que los objetos estén correctamente inicializados.");
 
-         // Mostrar el mensaje de alerta
+         // Show the alert message
          alert.showAndWait();
      }
 
     }
 
-
+    /**
+     * Set the layouts of the ship figure
+     * @param figure the ship figure to set the layout for.
+     * @param layoutX the x-coordinate
+     * @param layoutY the y-coordinate
+     */
     private void setFigureLayout(IShapeCreator figure, double layoutX, double layoutY) {
         figure.setLayoutX(layoutX);
         figure.setLayoutY(layoutY);
     }
 
+    /**
+     * Sets the ID of the ship figure.
+     * @param figure the ship figure to set the ID for.
+     * @param id the ID to set
+     */
     private void setFigureId(IShapeCreator figure, int id) {
         figure.setId(id);
     }
 
+    /**
+     * Handles the start button action.
+     * @param event the action event
+     * @throws IOException
+     */
     @FXML
     void onHandleButtonStartGame(ActionEvent event) throws IOException {
         int listSize = draggableMaker.getValidPos().size();
@@ -338,6 +359,11 @@ public class StartController extends Stage {
         }
     }
 
+    /**
+     * Obstains positions for the game and places bombs or safe shots on the board.
+     * @param ultimasPosicionesX the map of the last X positions.
+     * @param ultimasPosicionesY the map of the last Y positions.
+     */
     public void obtainPositions(Map<Integer, Double> ultimasPosicionesX, Map<Integer, Double> ultimasPosicionesY) {
         Bomb bomb = new Bomb();
         SafeShot safeShot = new SafeShot();
@@ -347,7 +373,7 @@ public class StartController extends Stage {
             throw new IllegalArgumentException("Los mapas no pueden ser nulos");
         }
 
-        // Obtener valores aleatorios en validPosX y validPosY
+        // Obtain random values on validPosX and validPosY
         List<Double> validPosX = new ArrayList<>();
         double startX = 69.0;
         double endX = 357.0;
@@ -375,7 +401,7 @@ public class StartController extends Stage {
             if (!combinacionesAnalizadas.contains(posToGuess)) {
                 combinacionesAnalizadas.add(posToGuess);
 
-                boolean bombPlaced = false; // Indicador para saber si se colocó una bomba
+                boolean bombPlaced = false; // Indicator to know if a bomb is in place
 
                 for (Map.Entry<Integer, Double> entry : ultimasPosicionesX.entrySet()) {
                     if (entry.getValue().equals(randomValueOnPosX)) {
@@ -385,14 +411,14 @@ public class StartController extends Stage {
                             bomb.setPosImgX(randomValueOnPosX - 32);
                             bomb.setPosImgY(randomValueOnPosY - 59);
                             setBombs.getChildren().add(bomb.getImageView());
-                            bombPlaced = true; // Se colocó una bomba
+                            bombPlaced = true; // A bomb has been placed
                             break;
                         }
                     }
                 }
 
                 if (bombPlaced) {
-                    break; // Salir del bucle si se colocó una bomba
+                    break; // Exit the loop if a bomb was placed.
                 }else {
                     safeShot.setPosImgX(randomValueOnPosX-37);
                     safeShot.setPosImgY(randomValueOnPosY-53);

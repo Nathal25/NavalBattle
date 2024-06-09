@@ -1,3 +1,6 @@
+/**
+ * The class {@code ShipPositions} establishes a set of defined arrays containing enemy
+ */
 package com.example.navalbattle.model;
 
 import java.util.ArrayList;

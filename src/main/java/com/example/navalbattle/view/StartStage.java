@@ -12,6 +12,10 @@ public class StartStage extends Stage {
 
     private StartStage startStage;
 
+    /**
+     * Constructor that initializes the game start window.
+     * @throws IOException if there is a problem while loading the game start window.
+     */
     public StartStage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/navalbattle/start-naval-battle-view.fxml"));
         Parent parent =loader.load();
@@ -23,12 +27,26 @@ public class StartStage extends Stage {
         setResizable(false);
         show();
     }
+
+    /**
+     * Internal static class containing a single instance of StartStage.
+     */
     private static class StartStageHolder{
         private static StartStage INSTANCE;
     }
+
+    /**
+     * Obtains the single instance of StartStage. If it doesn't exist, creates a new one.
+     * @return the single instance of StarStage
+     * @throws IOException if there is a problem creating the instance.
+     */
     public static StartStage getInstance() throws IOException {
         return StartStageHolder.INSTANCE=new StartStage();
     }
+
+    /**
+     * Closes and delete the StarStage instance.
+     */
     public static void deleteInstance(){
         StartStageHolder.INSTANCE.close();
         StartStageHolder.INSTANCE=null;
