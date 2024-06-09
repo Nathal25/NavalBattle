@@ -5,9 +5,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+/**
+ * The {@code Water} class manages the addition of water images to the game board.
+ */
 public class Water {
     private static final String AGUA_IMAGE_URL = "/com/example/navalbattle/images/Agua.png";
 
+    /**
+     * Adds a water image to the stackPane if the "Touched" image counter has not reached the maximum allowed.
+     * @param  stackPane The StackPane to which the water image will be added.
+     */
     public static void addAgua(StackPane stackPane) {
         try {
             if (!Touched.maximumCounter()) {

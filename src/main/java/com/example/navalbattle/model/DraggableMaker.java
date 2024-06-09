@@ -1,3 +1,4 @@
+
 package com.example.navalbattle.model;
 
 import com.example.navalbattle.model.Exceptions.InvalidPositionException;
@@ -11,7 +12,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * The {@code DraggableMaker} class allows to make draggable nodes and adjust their positions to the
+ * nearest grid on the game board.
+ * <p>
+ *     This class handles mouse events to allow nodes to be dragged and positioned correctly on a game board.
+ *     It also keeps track of the final position of the nodes.
+ * </p>
+ */
 public class DraggableMaker {
 
 
@@ -49,6 +57,12 @@ public class DraggableMaker {
     private Map<Integer, Double> ultimasPosicionesX = new HashMap<>();
     private Map<Integer, Double> ultimasPosicionesY = new HashMap<>();
 
+    /**
+     * Allows a node to be dragged and adjust its position to the nearest grid.
+     *
+     * @param node The node to be made draggable.
+     * @param shapeCreator The instance of the figure, it provides the limits and an id to the node.
+     */
     public void makeDraggable(Node node, ShapeCreator shapeCreator) {
         if (gameOn) {
             node.setOnMousePressed(mouseEvent -> {
@@ -83,6 +97,13 @@ public class DraggableMaker {
         }
     }
 
+    /**
+     * Adjust the position of a node to the nearest grid.
+     *
+     * @param node The node to be adjusted
+     * @param shapeCreator The instance of the figure, provides the node ID.
+     * @throws InvalidPositionException if the calculated position is not valid.
+     */
     public void adjustToClosestPosition(Node node, ShapeCreator shapeCreator) throws InvalidPositionException {
         int id = shapeCreator.getId();
         double currentY = node.getLayoutY();
@@ -142,6 +163,13 @@ public class DraggableMaker {
         System.out.println("Los giros son: " + turns);
     }
 
+    /**
+     * Converts X and Y coordinates to a grid position.
+     *
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
+     * @return The position on the grid in format (row, column)
+     */
     private String convertToGridPosition(double x, double y) {
         int column = (int) ((x - POSITION_X1) / 32) + 1;
         int row = (int) ((y - POSITION_Y1) / 32) + 1;
@@ -149,7 +177,9 @@ public class DraggableMaker {
         return "(" + row + ", " + column + ")";
     }
 
-    // Imprime las ultima posición de cada barco (No deja historial)
+    /**
+     * Prints the final positions of all boats.
+     */
     public void imprimirPosicionesFinales() {
         System.out.println("Posiciones finales de todos los barcos:");
         for (int id : ultimasPosicionesX.keySet()) {
@@ -158,6 +188,13 @@ public class DraggableMaker {
         }
     }
 
+    /**
+     * Adds additional positions to the ships according to their orientation and size.
+     * @param id The ship ID.
+     * @param closestX The closest X coordinate.
+     * @param closestY The closest Y coordinate.
+     * @param shapeCreator The instance of the figure that provides the node ID.
+     */
     public void agregarPosiciones(int id, double closestX, double closestY, ShapeCreator shapeCreator) {
         ultimasPosicionesX.put(id, closestX);
         ultimasPosicionesY.put(id, closestY);
@@ -183,25 +220,47 @@ public class DraggableMaker {
         }
     }
 
+    /**
+     * Returns the list of valid positions
+     *
+     * @return The list of valid positions
+     */
     public List<Integer> getValidPos() {
         return validPos;
     }
 
+    /**
+     * Adds a valid position to the list.
+     *
+     * @param id The ID of the valid position.
+     */
     public void addValidPos(int id) {
         if (!validPos.contains(id)) {
             validPos.add(id);
         }
     }
 
+    /**
+     * Disables mouse events for a node
+     * @param node The node for which mouse events will be disabled.
+     */
     public void disableMouseEvents(Node node) {
         node.setDisable(true);
         node.setPickOnBounds(false);
     }
 
+    /**
+     * Returns the map of the last X coordinates of the ships.
+     * @return The map of the last X coordinates of the ships.
+     */
     public Map<Integer, Double> getUltimasPosicionesX() {
         return ultimasPosicionesX;
     }
 
+    /**
+     * Returns the map of the last Y coordinates of the ships.
+     * @return the map of the last Y coordinates of the ships.
+     */
     public Map<Integer, Double> getUltimasPosicionesY() {
         return ultimasPosicionesY;
     }
